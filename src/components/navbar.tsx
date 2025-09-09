@@ -20,7 +20,7 @@ export default function Navbar() {
 
       <nav>
         {/* Desktop Menu */}
-        <ul className="hidden sm:flex gap-2 items-center justify-center text-lg font-semibold">
+        <ul className="hidden md:flex gap-2 items-center justify-center text-lg font-semibold">
           {MENUITEMS.map((item) => (
             <li key={item.title} className="p-2">
               <Link
@@ -34,7 +34,7 @@ export default function Navbar() {
         </ul>
 
         {/* Mobile Menu */}
-        <div className={`sm:hidden fixed top-16 left-0 right-0 bottom-0 z-50 overflow-hidden transition-all duration-300 ${isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+        <div className={`md:hidden fixed top-16 left-0 right-0 bottom-0 z-50 overflow-hidden transition-all duration-300 ${isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
           <ul className="flex flex-col text-md text-center font-semibold">
             {MENUITEMS.map((item) => (
               <li key={item.title} className="p-4 border-b border-gray-300">
@@ -64,7 +64,7 @@ function HamburgerButton({ isOpen, onClick, className = "" }: HamburgerButtonPro
   return (
     <button
       onClick={onClick}
-      className={`sm:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 ${className}`}
+      className={`md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 ${className}`}
       aria-label="Toggle menu"
       aria-expanded={isOpen}
     >

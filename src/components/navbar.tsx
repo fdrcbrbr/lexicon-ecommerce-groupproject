@@ -1,4 +1,4 @@
-'use clinet';
+'use client';
 import Link from "next/link";
 import { MENUITEMS } from "@/data/consts"
 import { useState } from "react";

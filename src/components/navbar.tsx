@@ -21,9 +21,9 @@ export default function Navbar() {
 
       <nav>
         {/* Desktop Menu */}
-        <ul className="hidden md:flex gap-2 items-center justify-center text-lg font-semibold">
+        <ul className="hidden md:flex gap-2 items-center justify-center">
           {MENUITEMS.map((item) => (
-            <li key={item.title} className="p-2">
+            <li key={item.title}>
               <Link
                 href={item.path}
                 className="hover:underline hover:underline-offset-2"
@@ -35,7 +35,7 @@ export default function Navbar() {
         </ul>
 
         {/* Mobile Menu */}
-        <div className={`md:hidden fixed top-16 left-0 right-0 bottom-0 z-50 overflow-hidden transition-all duration-300 ${isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+        <div className={`md:hidden fixed top-24 left-0 right-0 bottom-0 z-50 overflow-hidden transition-all duration-300 ${isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
           <ul className="flex flex-col text-md text-center font-semibold">
             {MENUITEMS.map((item) => (
               <li key={item.title} className="p-4 border-b border-gray-300">

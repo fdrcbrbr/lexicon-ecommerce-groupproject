@@ -1,14 +1,18 @@
-//import Navbar from "./navbar";
+import Navbar from "./navbar";
 import Link from "next/link";
 import { Search, ShoppingCart, CircleUserRound } from "lucide-react";
 
 export default function Header() {
   return (
-    <header className="w-full bg-white dark:bg-black shadow-md p-4">
-      <div className=" flex items-center justify-between">
-        {/* <Navbar /> */}
-        <h1 className="font-bold uppercase">Shop.Co</h1>
-        <div className="flex items-center space-x-4">
+    <header className="flex w-full px-4 py-8">
+      <div className="flex-1 flex justify-start items-center">
+        <Navbar />
+      </div>
+      <div className="flex-1 flex justify-center items-center">
+        <h1 className="uppercase text-shadow-md">Shop.Co</h1>
+      </div>
+      <div className="flex-1 flex justify-end items-center">
+        <div className="flex gap-x-4">
           <Link
             href="/products"
           >

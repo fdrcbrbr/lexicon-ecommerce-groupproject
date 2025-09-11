@@ -3,11 +3,11 @@ import Image from "next/image";
 export default function Hero() {
   return (
     <div>
-      <section className="w-full bg-[#F2F0F1] h-[100vh]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
-          <div className="flex flex-col md:flex-row items-center w-full h-full">
+      <section className="w-full bg-[#F2F0F1] sd:h-[70vh] md:h-[100vh] ">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full overflow-hidden">
+          <div className="flex flex-col md:flex-row items-center w-full h-full overflow-hidden">
             <div className="w-full md:w-1/2 space-y-6 p-4 overflow-hidden">
-              <h1 className="text-3xl md:text-5xl lg:text-6xl text-black font-black leading-none text-left">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl text-black font-black leading-none text-left">
                 FIND CLOTHES
                 <br />
                 THAT MATCHES
@@ -20,7 +20,7 @@ export default function Hero() {
                 your sense of style.
               </p>
               <div className="text-left">
-                <button className="bg-black text-white px-6 md:px-12 py-3 rounded-full hover:bg-gray-800 transition-colors w-full md:w-auto">
+                <button className="bg-black text-white px-6 md:px-12 py-3 rounded-full hover:bg-gray-800 transition-colors w-40 md:w-auto">
                   Shop Now
                 </button>
               </div>
@@ -31,12 +31,13 @@ export default function Hero() {
                 src="/hero-image.jpg"
                 alt="Couple wearing stylish clothes"
                 fill
-                className="object-cover object-top"
+                className="md:object-cover object-top"
               />
             </div>
           </div>
         </div>
       </section>
+                  <div className="h-[10vh] bg-black"></div>
     </div>
   );
 }

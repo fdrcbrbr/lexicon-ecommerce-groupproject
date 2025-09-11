@@ -13,7 +13,7 @@
   --color-tertiary: #F0EEED;
   --color-text-light: #ffffff;
   --color-text-dark: #000000;
-
+  
   /* === Fonts === */
   --font-inter: 'Inter', sans-serif;
   --font-integral: 'Integral CF', sans-serif;
@@ -88,6 +88,64 @@ button.secondary {
 /* === Utility Classes === */
 .text-muted {
   @apply text-gray-500;
+}
+
+.bg-secondary {
+  background-color: var(--color-secondary);
+}
+
+.bg-tertiary {
+  background-color: var(--color-tertiary);
+}
+
+/* === Responsive Typography === */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 36px;
+    width: 315px;
+    height: 93px;
+  }
+
+  h2 {
+    font-size: 32px;
+  }
+
+  h3 {
+    font-size: 16px;
+  }
+
+  p {
+    font-size: 14px;
+  }
+
+  .logo {
+    width: 126px;
+    height: 18px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  h1 {
+    font-size: 48px;
+  }
+
+  h2 {
+    font-size: 36px;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
+
+  p {
+    font-size: 15px;
+  }
+
+  .logo {
+    width: 150px;
+    height: 20px;
+  }
+
 }
 
 .bg-secondary {

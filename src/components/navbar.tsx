@@ -2,9 +2,11 @@
 import Link from "next/link";
 import { MENUITEMS } from "@/data/consts"
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const router = useRouter();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -12,6 +14,15 @@ export default function Navbar() {
 
   const closeMenu = () => {
     setIsMenuOpen(false);
+  };
+
+  const handleMenuClick = (path: string) => {
+    router.push(path);
+    closeMenu();
+  }
+
+  const handleMenuContentClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
   };
 
   return (
@@ -35,17 +46,20 @@ export default function Navbar() {
         </ul>
 
         {/* Mobile Menu */}
-        <div className={`md:hidden fixed top-24 left-0 right-0 bottom-0 z-50 overflow-hidden transition-all duration-300 ${isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
-          <ul className="flex flex-col text-md text-center font-semibold">
+        <div
+          className={`md:hidden absolute top-24 left-0 right-0 bottom-0 z-50 overflow-hidden transition-all duration-300
+          ${isMenuOpen ? 'h-full opacity-100' : 'max-h-0 opacity-0'}`}
+          onClick={closeMenu}
+        >
+          <ul
+            className="flex flex-col text-md text-center font-semibold bg-white shadow-lg"
+            onClick={handleMenuContentClick}
+          >
             {MENUITEMS.map((item) => (
-              <li key={item.title} className="p-4 border-b border-gray-300">
-                <Link
-                  href={item.path}
-                  className="hover:underline hover:underline-offset-2"
-                  onClick={closeMenu} // Close menu on link click
-                >
-                  {item.title}
-                </Link>
+              <li key={item.title} className="p-4 border-b border-gray-300 last:border-b-0"
+                onClick={() => handleMenuClick(item.path)}
+              >
+                <span className="hover:underline hover:underline-offset-2">{item.title}</span>
               </li>
             ))}
           </ul>
@@ -70,15 +84,15 @@ function HamburgerButton({ isOpen, onClick, className = "" }: HamburgerButtonPro
       aria-expanded={isOpen}
     >
       <span
-        className={`block w-6 h-0.5 bg-gray-900 dark:bg-gray-200 transition-all duration-300 ${isOpen ? 'rotate-45 translate-y-2' : ''
+        className={`block w-6 h-0.5 bg-gray-900 transition-all duration-300 ${isOpen ? 'rotate-45 translate-y-2' : ''
           }`}
       />
       <span
-        className={`block w-6 h-0.5 bg-gray-900 dark:bg-gray-200 transition-all duration-300 ${isOpen ? 'opacity-0' : ''
+        className={`block w-6 h-0.5 bg-gray-900 transition-all duration-300 ${isOpen ? 'opacity-0' : ''
           }`}
       />
       <span
-        className={`block w-6 h-0.5 bg-gray-900 dark:bg-gray-200 transition-all duration-300 ${isOpen ? '-rotate-45 -translate-y-2' : ''
+        className={`block w-6 h-0.5 bg-gray-900 transition-all duration-300 ${isOpen ? '-rotate-45 -translate-y-2' : ''
           }`}
       />
     </button>

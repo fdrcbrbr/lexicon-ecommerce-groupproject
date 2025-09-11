@@ -1,19 +1,13 @@
 import Link from "next/link";
-export default function SiteFooter() {
-  const linkList = [
-    { href: "/", label: "HOME" },
-    { href: "/about", label: "ABOUT" },
-    { href: "/contact", label: "CONTACT" },
-    { href: "/men", label: "MEN" },
-    { href: "/women", label: "WOMEN" },
-  ];
+import { MENUITEMS } from "@/data/consts"
+export default function Footer() {
 
   return (
     <>
       <section className="flex-grow min-h-svh "></section>
       <footer className="min-h-30 bg-gray-200 ">
         <section className=" flex flex-col text-center ">
-          <Link href="/" alt="home">
+          <Link href="/">
             <h2 className="text-black font-extrabold hover:text-gray-700 text-4xl mt-8">
               SHOP.CO
             </h2>
@@ -70,12 +64,12 @@ export default function SiteFooter() {
           </svg>
         </section>
         <ul className="gap-7 flex-wrap hidden md:flex place-content-center text-black mt-2">
-          {linkList.map((link, index) => (
+          {MENUITEMS.map((link, index) => (
             <li
               className="p-2 font-bold hover:text-gray-700 hover:underline"
               key={index}
             >
-              <Link href={link.href}>{link.label}</Link>
+              <Link href={link.path}>{link.title.toUpperCase()}</Link>
             </li>
           ))}
         </ul>

@@ -9,7 +9,7 @@ export default function Header() {
         <Navbar />
       </div>
       <div className="flex-1 flex justify-center items-center">
-        <h1 className="uppercase text-shadow-md">Shop.Co</h1>
+        <h1 className="uppercase text-shadow-md h-min w-min text-black font-extrabold hover:text-gray-700 text-4xl">Shop.Co</h1>
       </div>
       <div className="flex-1 flex justify-end items-center">
         <div className="flex gap-x-4">

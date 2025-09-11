@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MENUITEMS } from "@/lib/data/consts";
+import { MENUITEMS } from "@/data/consts";
 export default function Footer() {
   return (
     <>

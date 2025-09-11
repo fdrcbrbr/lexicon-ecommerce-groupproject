@@ -13,7 +13,6 @@
   --color-tertiary: #F0EEED;
   --color-text-light: #ffffff;
   --color-text-dark: #000000;
-
   --font-inter: 'Inter', sans-serif;
   --font-integral: 'Integral CF', sans-serif;
   --font-geist-sans: 'Geist', sans-serif;
@@ -144,70 +143,6 @@ button.secondary {
     width: 150px;
     height: 20px;
   }
-}
-
-body {
-  @apply bg-white text-neutral-800 antialiased;
-  font-family: var(--font-inter);
-}
-
-/* === Typography === */
-h1, h2, h3, h4 {
-  font-family: var(--font-integral);
-  @apply font-bold text-neutral-900;
-}
-
-h1 {
-  font-size: 64px;
-  line-height: 1.1;
-}
-
-h2 {
-  font-size: 42px;
-}
-
-h3 {
-  font-size: 20px;
-}
-
-p {
-  font-family: var(--font-inter);
-  font-size: 16px;
-}
-
-/* === Navbar === */
-.navbar-text {
-  font-family: var(--font-inter);
-  font-size: 24px;
-  font-weight: 400;
-  color: var(--color-text-dark);
-}
-
-/* === Buttons === */
-button {
-  @apply font-medium rounded px-4 py-2 transition-colors duration-200;
-  width: 210px;
-  height: 52px;
-}
-
-button.primary {
-  background-color: var(--color-primary);
-  color: var(--color-text-light);
-}
-
-button.secondary {
-  background-color: var(--color-secondary);
-  color: var(--color-text-dark);
-}
-
-/* === Cards === */
-.card {
-  @apply border rounded p-4 hover:shadow-md transition-shadow duration-200;
-}
-
-/* === Utility Classes === */
-.text-muted {
-  @apply text-gray-500;
 }
 
 .bg-secondary {

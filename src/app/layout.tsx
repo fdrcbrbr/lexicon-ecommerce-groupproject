@@ -19,17 +19,20 @@ export const metadata: Metadata = {
   description: "Find clothes that match your style",
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable}`}
-    >
-      <body className="bg-white text-neutral-800 font-sans antialiased">
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        {/*     
+        <Header />
+        <SiteFooter /> */}
         {children}
       </body>
     </html>

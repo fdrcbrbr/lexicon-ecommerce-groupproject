@@ -1,12 +1,10 @@
 import Link from "next/link";
-import { MENUITEMS } from "@/data/consts"
+import { MENUITEMS } from "@/data/consts";
 export default function Footer() {
-
   return (
     <>
-      <section className="flex-grow min-h-svh "></section>
       <footer className="min-h-30 bg-gray-200 ">
-        <section className=" flex flex-col text-center ">
+        <section className=" flex flex-col text-center mt-8">
           <Link href="/">
             <h2 className="text-black font-extrabold hover:text-gray-700 text-4xl mt-8">
               SHOP.CO
@@ -73,7 +71,7 @@ export default function Footer() {
             </li>
           ))}
         </ul>
-        <div className="bg-gray-300 mt-4 hidden md:flex h-0.25 w-svh justify-self-center shadow-xl shadow-black/50"></div>
+        <div className="bg-gray-600 mt-4 hidden md:flex h-2 w-svh justify-self-center shadow-xl shadow-black/50"></div>
         <p className="text-center text-gray-600 mt-4">
           Shop.co 2000-2025, All Rights Reserved
         </p>

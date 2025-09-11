@@ -1,10 +1,10 @@
+/* Import fonts from Google === */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 /* Import Tailwind */
 @tailwind base;      /* Tailwind base styles */
 @tailwind components; /* Tailwind components */
 @tailwind utilities;  /* Tailwind utility classes */
-
-/* Import fonts from Google === */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 /* Add custom Integral CF font */
 /* This is the font for the "SHOP.CO" logo */
@@ -16,7 +16,6 @@
   font-display: swap; /* Fast loading */
 }
 
-
 /* Base styles only essentials */
 @layer base {
   /* Basic HTML */
@@ -24,7 +23,7 @@
     font-size: 16px; /* 1rem = 16px */
     scroll-behavior: smooth; /* Smooth scrolling */
   }
-  
+   
   /* Basic body */
   body {
     font-family: var(--font-inter); /* Use Inter for all text */
@@ -33,9 +32,9 @@
   }
 }
 
-/*  Reusable components only */
+/* Reusable components only */
 @layer components {
-  
+   
   /* BASE BUTTON - Common style for all buttons */
   .btn-base {
     @apply inline-flex items-center justify-center; /* Centered flexbox */
@@ -45,7 +44,7 @@
     @apply transition-all duration-150; /* Smooth animation */
     @apply whitespace-nowrap select-none; /* Text on one line, not selectable */
   }
-  
+   
   /* Hover effect for product cards */
   .card-hover {
     @apply transition-transform duration-150; /* Transform animation */

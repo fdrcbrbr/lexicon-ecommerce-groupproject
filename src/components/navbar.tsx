@@ -1,6 +1,6 @@
 'use client';
 import Link from "next/link";
-import { MENUITEMS } from "@/data/consts"
+import { MENUITEMS } from "@/lib/data/consts"
 import { useState } from "react";
 
 export default function Navbar() {

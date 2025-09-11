@@ -1,23 +1,23 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  
+
   // Where to look for Tailwind classes
   content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',      // Next.js pages
-    './components/**/*.{js,ts,jsx,tsx,mdx}', // Components
-    './app/**/*.{js,ts,jsx,tsx,mdx}',        // Next.js app directory
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',      // Next.js pages
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}', // Components
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',        // Next.js app directory
   ],
-  
+
   theme: {
     extend: {
-      
+
       // SITE COLORS
       colors: {
-        
+
         // Main color black
         primary: '#000000',        // Main black
         secondary: '#ffffff',      // White
-        
+
         // Gray scale for text and backgrounds
         gray: {
           50: '#fafafa',    // Very light gray
@@ -31,27 +31,27 @@ module.exports = {
           800: '#262626',   // Almost black gray
           900: '#171717',   // Almost black
         },
-        
+
         // Status colors for messages, errors, etc
         success: '#22c55e',  // Green for success
         warning: '#f59e0b',  // Orange for warnings
         error: '#ef4444',    // Red for errors
         info: '#3b82f6',     // Blue for information
       },
-      
+
       // FONT FAMILIES
       fontFamily: {
         // Main font Inter for all normal text
         sans: ['var(--font-inter)', 'Inter', 'Arial', 'sans-serif'],
-        
+
         // Font for titles and logo Integral CF
         display: ['Integral CF', 'Arial Black', 'sans-serif'],
-        
+
         // Simpler aliases
         inter: ['var(--font-inter)', 'Inter', 'sans-serif'],
         integral: ['Integral CF', 'sans-serif'],
       },
-      
+
       // EXTRA SPACING in addition to Tailwind defaults
       spacing: {
         '18': '4.5rem',   // 72px - For large spacing
@@ -59,7 +59,7 @@ module.exports = {
         '25': '6.25rem',  // 100px - For desktop padding
         '30': '7.5rem',   // 120px
       },
-      
+
       // CONTAINER main content box
       container: {
         center: true,     // Always centered
@@ -70,14 +70,14 @@ module.exports = {
           xl: '6.25rem',      // 100px on large desktop
         },
       },
-      
+
       // ROUNDED BORDERS
       borderRadius: {
         // Extra borders for buttons
         'button': '62px',   // Very rounded buttons
         '4xl': '2rem',      // 32px for large cards
       },
-      
+
       // BREAKPOINTS responsive breaking points
       screens: {
         'mobile': '475px',    // Large phones
@@ -87,6 +87,6 @@ module.exports = {
       },
     },
   },
-      
+
   plugins: [],
 }

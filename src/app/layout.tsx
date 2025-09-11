@@ -2,12 +2,11 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
-// Import Inter da Google Fonts
+// Import Inter from Google Fonts
 const inter = Inter({
-  variable: "--font-inter", // Questa variabile CSS viene usata in globals.css
+  variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500", "600", "700"], // Specifica i pesi che usi
 });
 
 export const metadata: Metadata = {

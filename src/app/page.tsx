@@ -1,6 +1,6 @@
 import Hero from "@/components/hero";
 import Image from "next/image";
-import { getProductsByCategory } from "@/lib/data/products";
+import { getProductsByCategory } from "@/data/products";
 
 export default async function Home() {
   const { products } = await getProductsByCategory("sunglasses");

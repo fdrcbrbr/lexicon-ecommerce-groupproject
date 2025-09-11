@@ -1,20 +1,16 @@
+
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/header";
-import SiteFooter from "@/components/siteFooter";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+
+// Import Inter da Google Fonts
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "Shop.co",
@@ -28,10 +24,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Header />
+      <body className={`${inter.variable} antialiased`}>
         <main>{children}</main>
-        <SiteFooter />
       </body>
     </html>
   );

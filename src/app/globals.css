@@ -6,15 +6,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* === Root Variables === */
 :root {
-  /* === Color Palette === */
   --color-primary: #000000;
   --color-secondary: #F2F0F1;
   --color-tertiary: #F0EEED;
   --color-text-light: #ffffff;
   --color-text-dark: #000000;
 
-  /* === Fonts === */
   --font-inter: 'Inter', sans-serif;
   --font-integral: 'Integral CF', sans-serif;
   --font-geist-sans: 'Geist', sans-serif;
@@ -24,6 +23,127 @@
 /* === Global Reset === */
 html {
   scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-neutral-800 antialiased;
+  font-family: var(--font-inter);
+}
+
+/* === Typography === */
+h1, h2, h3, h4 {
+  font-family: var(--font-integral);
+  @apply font-bold text-neutral-900;
+}
+
+h1 {
+  font-size: 64px;
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: 42px;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+p {
+  font-family: var(--font-inter);
+  font-size: 16px;
+}
+
+/* === Navbar === */
+.navbar-text {
+  font-family: var(--font-inter);
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--color-text-dark);
+}
+
+/* === Buttons === */
+button {
+  @apply font-medium rounded px-4 py-2 transition-colors duration-200;
+  width: 210px;
+  height: 52px;
+}
+
+button.primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+}
+
+button.secondary {
+  background-color: var(--color-secondary);
+  color: var(--color-text-dark);
+}
+
+/* === Cards === */
+.card {
+  @apply border rounded p-4 hover:shadow-md transition-shadow duration-200;
+}
+
+/* === Utility Classes === */
+.text-muted {
+  @apply text-gray-500;
+}
+
+.bg-secondary {
+  background-color: var(--color-secondary);
+}
+
+.bg-tertiary {
+  background-color: var(--color-tertiary);
+}
+
+/* === Responsive Typography === */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 36px;
+    width: 315px;
+    height: 93px;
+  }
+
+  h2 {
+    font-size: 32px;
+  }
+
+  h3 {
+    font-size: 16px;
+  }
+
+  p {
+    font-size: 14px;
+  }
+
+  .logo {
+    width: 126px;
+    height: 18px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  h1 {
+    font-size: 48px;
+  }
+
+  h2 {
+    font-size: 36px;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
+
+  p {
+    font-size: 15px;
+  }
+
+  .logo {
+    width: 150px;
+    height: 20px;
+  }
 }
 
 body {

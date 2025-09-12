@@ -26,3 +26,25 @@ export function parseProductListingParams(searchParams: { [key: string]: string 
 
   return { pagination, filterData } as ProductsPageData;
 }
+
+export function buildQueryStringForProductsListing(params: ProductsPageData): string {
+  const query = new URLSearchParams();
+
+  if (params.pagination.page) {
+    query.append("page", params.pagination.page.toString());
+  }
+  if (params.pagination.limit) {
+    query.append("limit", params.pagination.limit.toString());
+  }
+  if (params.filterData.section) {
+    query.append("section", params.filterData.section);
+  }
+  if (params.filterData.categories && params.filterData.categories.length > 0) {
+    query.append("categories", params.filterData.categories.join(","));
+  }
+  if (params.filterData.searchterm) {
+    query.append("searchterm", params.filterData.searchterm);
+  }
+
+  return query.toString();
+}

@@ -21,6 +21,7 @@ export interface PaginationData {
   total?: number;
   page: number;
   limit: number;
+  isMobile: boolean;
 }
 export interface FilterData {
   section?: string;

@@ -1,9 +1,8 @@
 import Image from "next/image";
-
 export default function Hero() {
   return (
     <div>
-      <section className="w-full bg-[#F2F0F1] sd:h-[70vh] md:h-[100vh] ">
+      <section className="w-full bg-[#F2F0F1] h-[100vh]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full overflow-hidden">
           <div className="flex flex-col md:flex-row items-center w-full h-full overflow-hidden">
             <div className="w-full md:w-1/2 space-y-6 p-4 overflow-hidden">
@@ -25,8 +24,7 @@ export default function Hero() {
                 </button>
               </div>
             </div>
-
-            <div className="w-full md:w-1/2 flex items-center justify-center h-64 md:h-full relative overflow-hidden">
+            <div className="w-full md:w-1/2 flex items-center justify-center h-full relative overflow-hidden">
               <Image
                 src="/hero-image.jpg"
                 alt="Couple wearing stylish clothes"
@@ -37,7 +35,7 @@ export default function Hero() {
           </div>
         </div>
       </section>
-                  <div className="h-[10vh] bg-black"></div>
+      <div className="h-[15vh] bg-black"></div>
     </div>
   );
 }

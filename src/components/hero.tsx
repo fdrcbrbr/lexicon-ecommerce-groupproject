@@ -25,18 +25,19 @@ export default function Hero() {
               </div>
             </div>
 
-            <div className="w-full md:w-1/2 flex items-center justify-center h-64 md:h-full relative overflow-hidden">
+            <div className="w-full md:w-1/2 h-64 md:h-full relative overflow-hidden aspect-[4/3] md:aspect-auto">
               <Image
                 src="/hero-image.jpg"
                 alt="Couple wearing stylish clothes"
                 fill
                 className="md:object-cover object-top"
+
               />
             </div>
           </div>
         </div>
       </section>
-      <div className="h-[10vh] bg-black"></div>
+      <div className="h-[15vh] bg-black"></div>
     </div>
   );
 }

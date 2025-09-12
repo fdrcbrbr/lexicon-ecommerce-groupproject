@@ -13,3 +13,18 @@ export interface Products {
   size?: number;
   thumbnail: string;
 }
+export interface ProductsPageData {
+  pagination: PaginationData;
+  filterData: FilterData;
+}
+export interface PaginationData {
+  total?: number;
+  page: number;
+  limit: number;
+  isMobile: boolean;
+}
+export interface FilterData {
+  section?: string;
+  categories?: string[];
+  searchterm?: string;
+}

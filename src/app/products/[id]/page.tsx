@@ -3,6 +3,7 @@ import { getProductDetails } from "@/data/products";
 import Image from "next/image";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { ProductReview } from "@/lib/interfaces";
+import { Star } from "lucide-react";
 
 interface ProductDetailsProps {
   params: Promise<{ id: string }>;
@@ -112,10 +113,56 @@ async function ProductDetails({ id }: { id: string }) {
 function ReviewCard({ review }: { review: ProductReview }) {
   return (
     <div>
+      <StarRating rating={review.rating} size={20} />
       <p>Name: {review.reviewerName}</p>
-      <p>Rating: {review.rating}</p>
       <p>Comment: {review.comment}</p>
       <p>Date: {new Date(review.date).toDateString()}</p>
+    </div>
+  );
+}
+
+interface StarRatingProps {
+  rating: number;
+  size?: number;
+  className?: string;
+}
+
+function StarRating({ rating, size = 24, className = "" }: StarRatingProps) {
+  const clampedRating = Math.max(0, Math.min(5, rating));
+
+  const stars = [];
+
+  for (let i = 1; i <= 5; i++) {
+    const fillPercentage = Math.max(0, Math.min(1, clampedRating - i + 1));
+
+    stars.push(
+      <div key={i} className="relative inline-block">
+        <Star
+          size={size}
+          className="text-gray-300"
+          fill="currentColor"
+        />
+
+        <div
+          className="absolute top-0 left-0 overflow-hidden"
+          style={{ width: `${fillPercentage * 100}%` }}
+        >
+          <Star
+            size={size}
+            className="text-yellow-400"
+            fill="currentColor"
+          />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={`flex items-center space-x-1 ${className}`}>
+      {stars}
+      <span className="ml-2 text-sm text-gray-600">
+        {clampedRating.toFixed(1)} / 5
+      </span>
     </div>
   );
 }

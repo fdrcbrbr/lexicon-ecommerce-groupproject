@@ -1,6 +1,8 @@
 import { Suspense } from "react";
 import { getProductDetails } from "@/data/products";
 import Image from "next/image";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+
 interface ProductDetailsProps {
   params: Promise<{ id: string }>;
 }
@@ -21,13 +23,38 @@ async function ProductDetails({ id }: { id: string }) {
   return (
     <div>
       <h1 className="text-3xl font-bold mb-4 text-center">{data.title}</h1>
-      <p>{data.description}</p>
-      <Image
-        src={data.thumbnail}
-        alt={data.title}
-        width={300}
-        height={300}
-      />
+      <div className="flex flex-col md:flex-row gap-2 items-center justify-between mx-8">
+        <p className="flex-1">{data.description}</p>
+        {data.images ? (<Carousel className="flex-1 flex justify-center">
+          <CarouselContent>
+            {data.images.map((image, index) => (
+              <CarouselItem key={index}>
+                <Image
+                  className="p-1 rounded-md"
+                  src={image}
+                  alt={data.title}
+                  width={200}
+                  height={300}
+                />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          {data.images.length > 1 && (
+            <>
+              <CarouselNext className="border-1" />
+              <CarouselPrevious className="border-1" />
+            </>
+          )}
+        </Carousel>
+        ) : (
+          <Image
+            src={data.thumbnail}
+            alt={data.title}
+            width={300}
+            height={300}
+          />
+        )}
+      </div>
     </div>
   );
 }

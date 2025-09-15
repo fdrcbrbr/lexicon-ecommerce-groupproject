@@ -83,6 +83,37 @@ async function ProductDetails({ id }: { id: string }) {
           <p>Tags: {data.tags.join(", ")}</p>
         </div>
       </div>
+      <div className="mt-8">
+        <div className="flex gap-4">
+          <p className="mb-4">Reviews:</p>
+        </div>
+        <Carousel className="mx-auto">
+          <CarouselContent>
+            {data.reviews.map((review, index) => (
+              <CarouselItem key={index}>
+                <ReviewCard review={review} />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          {data.reviews.length > 1 && (
+            <>
+              <CarouselNext className="border-1" />
+              <CarouselPrevious className="border-1" />
+            </>
+          )}
+        </Carousel>
+      </div>
+    </div>
+  );
+}
+
+function ReviewCard({ review }: { review: ProductReview }) {
+  return (
+    <div>
+      <p>Name: {review.reviewerName}</p>
+      <p>Rating: {review.rating}</p>
+      <p>Comment: {review.comment}</p>
+      <p>Date: {review.date}</p>
     </div>
   );
 }

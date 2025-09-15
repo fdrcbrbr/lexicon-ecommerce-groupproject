@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-
-  // Where to look for Tailwind classes
+    darkMode: ['class'],
+    // Where to look for Tailwind classes
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',      // Next.js pages
     './src/components/**/*.{js,ts,jsx,tsx,mdx}', // Components
@@ -9,84 +9,117 @@ module.exports = {
   ],
 
   theme: {
-    extend: {
-
-      // SITE COLORS
-      colors: {
-
-        // Main color black
-        primary: '#000000',        // Main black
-        secondary: '#ffffff',      // White
-
-        // Gray scale for text and backgrounds
-        gray: {
-          50: '#fafafa',    // Very light gray
-          100: '#f5f5f5',   // Very light gray
-          200: '#e5e5e5',   // Light gray
-          300: '#d4d4d4',   // Medium-light gray
-          400: '#a3a3a3',   // Medium gray
-          500: '#737373',   // Gray
-          600: '#525252',   // Dark gray
-          700: '#404040',   // Very dark gray
-          800: '#262626',   // Almost black gray
-          900: '#171717',   // Almost black
-        },
-
-        // Status colors for messages, errors, etc
-        success: '#22c55e',  // Green for success
-        warning: '#f59e0b',  // Orange for warnings
-        error: '#ef4444',    // Red for errors
-        info: '#3b82f6',     // Blue for information
-      },
-
-      // FONT FAMILIES
-      fontFamily: {
-        // Main font Inter for all normal text
-        sans: ['var(--font-inter)', 'Inter', 'Arial', 'sans-serif'],
-
-        // Font for titles and logo Integral CF
-        display: ['Integral CF', 'Arial Black', 'sans-serif'],
-
-        // Simpler aliases
-        inter: ['var(--font-inter)', 'Inter', 'sans-serif'],
-        integral: ['Integral CF', 'sans-serif'],
-      },
-
-      // EXTRA SPACING in addition to Tailwind defaults
-      spacing: {
-        '18': '4.5rem',   // 72px - For large spacing
-        '22': '5.5rem',   // 88px
-        '25': '6.25rem',  // 100px - For desktop padding
-        '30': '7.5rem',   // 120px
-      },
-
-      // CONTAINER main content box
-      container: {
-        center: true,     // Always centered
-        padding: {
-          DEFAULT: '1rem',    // 16px on mobile
-          sm: '2rem',         // 32px on small tablet
-          lg: '4rem',         // 64px on desktop
-          xl: '6.25rem',      // 100px on large desktop
-        },
-      },
-
-      // ROUNDED BORDERS
-      borderRadius: {
-        // Extra borders for buttons
-        'button': '62px',   // Very rounded buttons
-        '4xl': '2rem',      // 32px for large cards
-      },
-
-      // BREAKPOINTS responsive breaking points
-      screens: {
-        'mobile': '475px',    // Large phones
-        'tablet': '768px',    // Tablets
-        'desktop': '1024px',  // Computers
-        'wide': '1440px',     // Large screens
-      },
-    },
+  	extend: {
+  		colors: {
+  			primary: {
+  				DEFAULT: 'hsl(var(--primary))',
+  				foreground: 'hsl(var(--primary-foreground))'
+  			},
+  			secondary: {
+  				DEFAULT: 'hsl(var(--secondary))',
+  				foreground: 'hsl(var(--secondary-foreground))'
+  			},
+  			gray: {
+  				'50': '#fafafa',
+  				'100': '#f5f5f5',
+  				'200': '#e5e5e5',
+  				'300': '#d4d4d4',
+  				'400': '#a3a3a3',
+  				'500': '#737373',
+  				'600': '#525252',
+  				'700': '#404040',
+  				'800': '#262626',
+  				'900': '#171717'
+  			},
+  			success: '#22c55e',
+  			warning: '#f59e0b',
+  			error: '#ef4444',
+  			info: '#3b82f6',
+  			background: 'hsl(var(--background))',
+  			foreground: 'hsl(var(--foreground))',
+  			card: {
+  				DEFAULT: 'hsl(var(--card))',
+  				foreground: 'hsl(var(--card-foreground))'
+  			},
+  			popover: {
+  				DEFAULT: 'hsl(var(--popover))',
+  				foreground: 'hsl(var(--popover-foreground))'
+  			},
+  			muted: {
+  				DEFAULT: 'hsl(var(--muted))',
+  				foreground: 'hsl(var(--muted-foreground))'
+  			},
+  			accent: {
+  				DEFAULT: 'hsl(var(--accent))',
+  				foreground: 'hsl(var(--accent-foreground))'
+  			},
+  			destructive: {
+  				DEFAULT: 'hsl(var(--destructive))',
+  				foreground: 'hsl(var(--destructive-foreground))'
+  			},
+  			border: 'hsl(var(--border))',
+  			input: 'hsl(var(--input))',
+  			ring: 'hsl(var(--ring))',
+  			chart: {
+  				'1': 'hsl(var(--chart-1))',
+  				'2': 'hsl(var(--chart-2))',
+  				'3': 'hsl(var(--chart-3))',
+  				'4': 'hsl(var(--chart-4))',
+  				'5': 'hsl(var(--chart-5))'
+  			}
+  		},
+  		fontFamily: {
+  			sans: [
+  				'var(--font-inter)',
+  				'Inter',
+  				'Arial',
+  				'sans-serif'
+  			],
+  			display: [
+  				'Integral CF',
+  				'Arial Black',
+  				'sans-serif'
+  			],
+  			inter: [
+  				'var(--font-inter)',
+  				'Inter',
+  				'sans-serif'
+  			],
+  			integral: [
+  				'Integral CF',
+  				'sans-serif'
+  			]
+  		},
+  		spacing: {
+  			'18': '4.5rem',
+  			'22': '5.5rem',
+  			'25': '6.25rem',
+  			'30': '7.5rem'
+  		},
+  		container: {
+  			center: true,
+  			padding: {
+  				DEFAULT: '1rem',
+  				sm: '2rem',
+  				lg: '4rem',
+  				xl: '6.25rem'
+  			}
+  		},
+  		borderRadius: {
+  			button: '62px',
+  			'4xl': '2rem',
+  			lg: 'var(--radius)',
+  			md: 'calc(var(--radius) - 2px)',
+  			sm: 'calc(var(--radius) - 4px)'
+  		},
+  		screens: {
+  			mobile: '475px',
+  			tablet: '768px',
+  			desktop: '1024px',
+  			wide: '1440px'
+  		}
+  	}
   },
 
-  plugins: [],
+  plugins: [import("tailwindcss-animate")],
 }

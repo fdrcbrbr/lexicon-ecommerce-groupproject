@@ -22,12 +22,16 @@ async function ProductDetails({ id }: { id: string }) {
 
   return (
     <div>
-      <h2 className="text-3xl font-bold mb-4 text-center">{data.title}</h2>
+      <div className="flex flex-col md:flex-row gap-1 md:gap-4 items-center justify-center mb-4">
+        <h2 className="text-3xl font-bold text-center">{data.title}</h2>
+        <p>by</p>
+        <h4 className="text-xl font-bold text-center">{data.brand}</h4>
+      </div>
       <div className="flex flex-col md:flex-row gap-4 items-center justify-between mx-8">
         <p className="flex-1">{data.description}</p>
         <div className="flex-1 flex justify-center mx-auto px-8 w-min">
           {data.images ? (<Carousel>
-            <CarouselContent>
+            <CarouselContent className="mx-auto">
               {data.images.map((image, index) => (
                 <CarouselItem key={index}>
                   <Image

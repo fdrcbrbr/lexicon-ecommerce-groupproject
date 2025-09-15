@@ -31,7 +31,7 @@ export interface FilterData {
 export interface ProductDetails extends Products {
   discountPercentage?: number;
   rating?: number;
-  stock?: number;
+  stock: number;
   brand?: string;
   tags: string[];
   weight: number;

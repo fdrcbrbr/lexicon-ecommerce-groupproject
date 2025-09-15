@@ -28,3 +28,29 @@ export interface FilterData {
   categories?: string[];
   searchterm?: string;
 }
+export interface ProductDetails extends Products {
+  discountPercentage?: number;
+  rating?: number;
+  stock?: number;
+  brand?: string;
+  tags: string[];
+  weight: number;
+  dimensions: {
+    width: number;
+    height: number;
+    depth: number;
+  };
+  images: string[];
+  warrantyInformation: string;
+  shippingInformation: string;
+  availabilityStatus: string;
+  returnPolicy: string;
+  reviews: ProductReview[];
+}
+export interface ProductReview {
+  rating: number;
+  comment: string;
+  date: string;
+  reviewerName: string;
+  reviewerEmail: string;
+}

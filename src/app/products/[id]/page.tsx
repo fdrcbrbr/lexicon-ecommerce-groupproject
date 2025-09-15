@@ -22,7 +22,7 @@ async function ProductDetails({ id }: { id: string }) {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-4 text-center">{data.title}</h1>
+      <h2 className="text-3xl font-bold mb-4 text-center">{data.title}</h2>
       <div className="flex flex-col md:flex-row gap-2 items-center justify-between mx-8">
         <p className="flex-1">{data.description}</p>
         {data.images ? (<Carousel className="flex-1 flex justify-center">

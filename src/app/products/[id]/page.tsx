@@ -1,9 +1,9 @@
 import { Suspense } from "react";
 import { getProductDetails } from "@/data/products";
-import Image from "next/image";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { ProductReview } from "@/lib/interfaces";
 import { Star } from "lucide-react";
+import ImageCarousel from "./imageCarousel";
 
 interface ProductDetailsProps {
   params: Promise<{ id: string }>;
@@ -26,38 +26,10 @@ async function ProductDetails({ id }: { id: string }) {
     <div className="px-8">
       <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
         <div className="flex-1 flex justify-center mx-auto px-8 w-min">
-          {data.images ? (<Carousel>
-            <CarouselContent className="mx-auto">
-              {data.images.map((image, index) => (
-                <CarouselItem key={index}>
-                  <Image
-                    className="p-1 rounded-md overflow-hidden"
-                    src={image}
-                    alt={data.title}
-                    width={200}
-                    height={300}
-                  />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            {data.images.length > 1 && (
-              <>
-                <CarouselNext className="border-1" />
-                <CarouselPrevious className="border-1" />
-              </>
-            )}
-          </Carousel>
-          ) : (
-            <Image
-              src={data.thumbnail}
-              alt={data.title}
-              width={300}
-              height={300}
-            />
-          )}
+          <ImageCarousel images={data.images} fallbackImage={data.thumbnail} />
         </div>
         <div className="flex-1 flex flex-col gap-2">
-          <div className="flex flex-col gap-0 items-center justify-center mb-4">
+          <div className="flex md:flex-col gap-2 md:gap-0 items-center justify-center mb-4">
             <h2 className="text-2xl font-bold text-center">{data.title}</h2>
             {data.brand && (
               <>

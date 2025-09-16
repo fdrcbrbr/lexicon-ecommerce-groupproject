@@ -24,17 +24,7 @@ async function ProductDetails({ id }: { id: string }) {
 
   return (
     <div className="px-8">
-      <div className="flex flex-col md:flex-row gap-1 md:gap-4 items-center justify-center mb-4">
-        <h2 className="text-3xl font-bold text-center">{data.title}</h2>
-        {data.brand && (
-          <>
-            <p>by</p>
-            <h4 className="text-xl font-bold text-center">{data.brand}</h4>
-          </>
-        )}
-      </div>
       <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-        <p className="flex-1">{data.description}</p>
         <div className="flex-1 flex justify-center mx-auto px-8 w-min">
           {data.images ? (<Carousel>
             <CarouselContent className="mx-auto">
@@ -66,6 +56,19 @@ async function ProductDetails({ id }: { id: string }) {
             />
           )}
         </div>
+        <div className="flex-1 flex flex-col gap-2">
+          <div className="flex flex-col gap-0 items-center justify-center mb-4">
+            <h2 className="text-2xl font-bold text-center">{data.title}</h2>
+            {data.brand && (
+              <>
+                <p>by</p>
+                <h4 className="text-xl font-bold text-center">{data.brand}</h4>
+              </>
+            )}
+          </div>
+          <PriceDisplay price={data.price} discountPercentage={data.discountPercentage} />
+          <p className="text-sm">{data.description}</p>
+        </div>
       </div>
       <div className="flex flex-col md:flex-row gap-0 md:gap-4 items-center justify-center mx-auto">
         <div>
@@ -79,8 +82,6 @@ async function ProductDetails({ id }: { id: string }) {
           <p>Size: {data.dimensions.width} x {data.dimensions.height} x {data.dimensions.depth} cm</p>
         </div>
         <div>
-          <p>Price: {data.price}</p>
-          <p>Discount: {data.discountPercentage}%</p>
           <p>Tags: {data.tags.join(", ")}</p>
         </div>
       </div>
@@ -163,6 +164,36 @@ function StarRating({ rating, size = 24, className = "" }: StarRatingProps) {
       <span className="ml-2 text-sm text-gray-600">
         {clampedRating.toFixed(1)} / 5
       </span>
+    </div>
+  );
+}
+
+interface PriceDisplayProps {
+  price: number;
+  discountPercentage?: number;
+}
+
+function PriceDisplay({ price, discountPercentage }: PriceDisplayProps) {
+  const formatPrice = (amount: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    }).format(amount);
+  };
+
+  const discountedPrice = discountPercentage ? price * (1 - discountPercentage / 100) : price;
+  const hasDiscount = discountPercentage && discountPercentage > 0;
+
+  return (
+    <div className="flex items-center gap-2">
+      <span className="text-2xl font-bold text-green-600">
+        {formatPrice(discountedPrice)}
+      </span>
+      {hasDiscount && (
+        <span className="text-lg text-gray-500 line-through">
+          {formatPrice(price)}
+        </span>
+      )}
     </div>
   );
 }

@@ -25,41 +25,42 @@ async function ProductDetails({ id }: { id: string }) {
   return (
     <div className="px-8">
       <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-        <div className="flex-1 flex justify-center mx-auto px-8 w-min">
+        <div className="flex-1 px-8 w-min">
           <ImageCarousel images={data.images} fallbackImage={data.thumbnail} />
         </div>
-        <div className="flex-1 flex flex-col gap-2">
-          <div className="flex md:flex-col gap-2 md:gap-0 items-center justify-center mb-4">
-            <h2 className="text-2xl font-bold text-center">{data.title}</h2>
+        <div className="flex-1 flex flex-col gap-2 justify-between h-full">
+          <div className="flex md:flex-col gap-2 md:gap-0 mb-4">
+            <h2 className="text-2xl font-bold">{data.title}</h2>
             {data.brand && (
               <>
-                <p>by</p>
-                <h4 className="text-xl font-bold text-center">{data.brand}</h4>
+                <p>by{" "}<span className="text-xl font-bold text-center">{data.brand}</span></p>
               </>
             )}
           </div>
-          <PriceDisplay price={data.price} discountPercentage={data.discountPercentage} />
-          <p className="text-sm">{data.description}</p>
+          <div>
+            <PriceDisplay price={data.price} discountPercentage={data.discountPercentage} />
+            <p className="text-sm mt-4">{data.description}</p>
+          </div>
         </div>
       </div>
       <div className="flex flex-col md:flex-row gap-0 md:gap-4 items-center justify-center mx-auto">
-        <div>
+        <div className="border-2 rounded-xl p-2 h-full">
           <p>Warranty: {data.warrantyInformation}</p>
           <p>Shipping: {data.shippingInformation}</p>
           <p>Return Policy: {data.returnPolicy}</p>
         </div>
-        <div>
-          <p>Availability: {data.stock > 0 && data.stock} {data.availabilityStatus}</p>
+        <div className="border-2 rounded-xl p-2 h-full">
           <p>Weight: {data.weight} kg</p>
           <p>Size: {data.dimensions.width} x {data.dimensions.height} x {data.dimensions.depth} cm</p>
         </div>
-        <div>
+        <div className="border-2 rounded-xl p-2 h-full">
+          <p>Availability: {data.stock > 0 && data.stock} {data.availabilityStatus}</p>
           <p>Tags: {data.tags.join(", ")}</p>
         </div>
       </div>
       <div className="mt-8">
         <div className="flex gap-4">
-          <p className="mb-4">Reviews:</p>
+          <p className="mb-4 flex gap-1">Overall rating <StarRating rating={data.rating} /> from {data.reviews.length} reviews</p>
         </div>
         <div className="px-4">
           <Carousel className="mx-auto">

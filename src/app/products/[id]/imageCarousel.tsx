@@ -52,17 +52,17 @@ export default function ImageCarousel({ images, fallbackImage, className = "" }:
             }}
             className="w-full h-full"
           >
-            <CarouselContent className="h-full mt-4">
+            <CarouselContent className="h-full mt-4 p-2">
               {displayImages.map((imageUrl, index) => (
                 <CarouselItem key={index} className="pt-2 basis-1/3">
                   <div
-                    className={`relative cursor-pointer transition-all duration-200 rounded-lg overflow-hidden h-full max-h-22 max-w-22 m-2 ${index === currentIndex
+                    className={`relative cursor-pointer transition-all duration-200 rounded-xl overflow-hidden h-full max-h-20 max-w-20 p-2 ${index === currentIndex
                         ? 'ring-2 ring-blue-500 ring-offset-2 shadow-lg'
                         : 'hover:ring-1 hover:ring-gray-300 hover:shadow-md'
                       }`}
                     onClick={() => handleThumbnailClick(index)}
                   >
-                    <div className="aspect-[4/3] relative bg-gray-100 max-h-20 max-w-20">
+                    <div className="aspect-[4/3] relative bg-gray-100">
                       <Image
                         src={imageUrl}
                         alt={`Image ${index + 1}`}
@@ -117,11 +117,11 @@ export default function ImageCarousel({ images, fallbackImage, className = "" }:
             }}
             className="w-full"
           >
-            <CarouselContent className="ml-4">
+            <CarouselContent className="ml-4 p-2">
               {displayImages.map((imageUrl, index) => (
                 <CarouselItem key={index} className="pl-2 basis-1/3 sm:basis-1/4">
                   <div
-                    className={`relative cursor-pointer transition-all duration-200 rounded-lg overflow-hidden ${index === currentIndex
+                    className={`relative cursor-pointer transition-all duration-200 rounded-xl overflow-hidden max-h-20 max-w-20 p-2 ${index === currentIndex
                         ? 'ring-2 ring-blue-500 ring-offset-2 shadow-lg'
                         : 'hover:ring-1 hover:ring-gray-300 hover:shadow-md'
                       }`}

@@ -25,7 +25,7 @@ async function ProductDetails({ id }: { id: string }) {
   return (
     <div className="px-8">
       <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-        <div className="flex-1 px-8 w-min">
+        <div className="flex-1 px-8 w-full">
           <ImageCarousel images={data.images} fallbackImage={data.thumbnail} />
         </div>
         <div className="flex-1 flex flex-col gap-2 justify-between h-full">

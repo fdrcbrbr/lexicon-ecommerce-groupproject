@@ -66,7 +66,7 @@ async function ProductDetails({ id }: { id: string }) {
           <Carousel className="mx-auto">
             <CarouselContent>
               {data.reviews.map((review, index) => (
-                <CarouselItem key={index} className="md:basis-1/3">
+                <CarouselItem key={index} className="sm:basis-1/2 md:basis-1/3">
                   <ReviewCard review={review} />
                 </CarouselItem>
               ))}

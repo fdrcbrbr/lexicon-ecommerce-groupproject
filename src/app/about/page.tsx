@@ -13,6 +13,7 @@ export default function AboutPage() {
           alt="Picture representing us"
           width={300}
           height={300}
+          className="rounded-lg"
         />
       </div>
       <div className="flex gap-4">
@@ -21,6 +22,7 @@ export default function AboutPage() {
           alt="Picture of HQ with area"
           width={300}
           height={300}
+          className="rounded-lg"
         />
         <div className="flex flex-col gap-2">
           <h3 className="text-3xl font-bold text-center">History</h3>

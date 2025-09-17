@@ -38,7 +38,10 @@ async function ProductDetails({ id }: { id: string }) {
             )}
           </div>
           <div>
-            <PriceDisplay price={data.price} discountPercentage={data.discountPercentage} />
+            <p className="flex md:flex-col gap-8 md:gap-0 items-center md:items-start">
+              <PriceDisplay price={data.price} discountPercentage={data.discountPercentage} />
+              <p>Availability: {data.stock > 0 && data.stock} {data.availabilityStatus}</p>
+            </p>
             <p className="text-sm mt-4">{data.description}</p>
           </div>
         </div>
@@ -54,7 +57,6 @@ async function ProductDetails({ id }: { id: string }) {
           <p>Size: {data.dimensions.width} x {data.dimensions.height} x {data.dimensions.depth} cm</p>
         </div>
         <div className="border-2 rounded-xl p-2 h-full">
-          <p>Availability: {data.stock > 0 && data.stock} {data.availabilityStatus}</p>
           <p>Tags: {data.tags.join(", ")}</p>
         </div>
       </div>

@@ -58,7 +58,12 @@ export default function AddToCart({ productId, variant = "small" }: AddToCartPro
         >
           <Minus size={20} />
         </button>
-        <span className="mx-2">{amount}</span>
+        <input
+          type="text"
+          value={amount}
+          onChange={(e) => setAmount(parseInt(e.target.value) || 1)}
+          className="border-0 w-6 bg-gray-200 text-center"
+        />
         <button
           onClick={() => setAmount(amount + 1)}
           className="flex"

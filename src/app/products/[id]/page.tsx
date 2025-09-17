@@ -5,6 +5,7 @@ import { ProductReview } from "@/lib/interfaces";
 import { Star } from "lucide-react";
 import ImageCarousel from "./imageCarousel";
 import AddToCart from "@/components/addToCart";
+import { Badge } from "@/components/ui/badge";
 
 interface ProductDetailsProps {
   params: Promise<{ id: string }>;
@@ -45,13 +46,20 @@ async function ProductDetails({ id }: { id: string }) {
             </p>
             <p className="text-sm mt-4">{data.description}</p>
           </div>
-          <div className="border-2 rounded-xl p-2">
-            <p>Tags: {data.tags.join(", ")}</p>
+          <div className="flex gap-2 p-2 capitalize">
+            {data.tags.length > 0 && data.tags.map((tag, index) => (
+              <Badge
+                key={index}
+                className="border-2 border-gray-500 rounded-full"
+              >
+                {tag}
+              </Badge>
+            ))}
           </div>
           <AddToCart productId={id} variant="large" />
         </div>
       </div>
-      <div className="space-y-4">
+      <div className="space-y-4 mt-8">
         <div className="flex justify-between border-2 rounded-xl p-2">
           <p>Warranty: {data.warrantyInformation}</p>
           <p>Return Policy: {data.returnPolicy}</p>

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { ShoppingBag, Plus, Minus } from "lucide-react";
 import { toast } from "sonner";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface AddToCartProps {
   productId: string;
@@ -36,13 +37,27 @@ export default function AddToCart({ productId, variant = "small" }: AddToCartPro
 
   if (variant === "small") {
     return (
-      <button
-        onClick={handleAddClick}
-        className="flex"
-        aria-label="Add to cart"
-      >
-        <ShoppingBag size={20} />
-      </button>
+      <div>
+        <Tooltip>
+          <TooltipTrigger>
+            <button
+              onClick={handleAddClick}
+              className="flex"
+              aria-label="Add to cart"
+            >
+              <ShoppingBag size={20} />
+            </button>
+          </TooltipTrigger>
+          <TooltipContent
+          className="border-2 border-gray-400 rounded-full"
+           side="bottom"
+           align="center"
+           sideOffset={5}
+           >
+            <p>Add 1 to cart</p>
+          </TooltipContent>
+        </Tooltip>
+      </div>
     );
   }
 

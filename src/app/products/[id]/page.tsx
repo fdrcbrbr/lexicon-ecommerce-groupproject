@@ -4,6 +4,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { ProductReview } from "@/lib/interfaces";
 import { Star } from "lucide-react";
 import ImageCarousel from "./imageCarousel";
+import AddToCart from "./addToCart";
 
 interface ProductDetailsProps {
   params: Promise<{ id: string }>;
@@ -44,6 +45,7 @@ async function ProductDetails({ id }: { id: string }) {
             </p>
             <p className="text-sm mt-4">{data.description}</p>
           </div>
+          <AddToCart productId={id} variant="large" />
         </div>
       </div>
       <div className="flex flex-col md:flex-row gap-0 md:gap-4 items-center justify-center mx-auto">

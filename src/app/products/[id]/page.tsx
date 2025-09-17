@@ -97,16 +97,17 @@ function ReviewCard({ review }: { review: ProductReview }) {
 
 interface StarRatingProps {
   rating: number;
+  maxStars?: number;
   size?: number;
   className?: string;
 }
 
-function StarRating({ rating, size = 24, className = "" }: StarRatingProps) {
-  const clampedRating = Math.max(0, Math.min(5, rating));
+function StarRating({ rating, maxStars = 5, size = 24, className = "" }: StarRatingProps) {
+  const clampedRating = Math.max(0, Math.min(maxStars, rating));
 
   const stars = [];
 
-  for (let i = 1; i <= 5; i++) {
+  for (let i = 1; i <= maxStars; i++) {
     const fillPercentage = Math.max(0, Math.min(1, clampedRating - i + 1));
 
     stars.push(
@@ -135,7 +136,7 @@ function StarRating({ rating, size = 24, className = "" }: StarRatingProps) {
     <div className={`flex items-center space-x-1 ${className}`}>
       {stars}
       <span className="ml-2 text-sm text-gray-600">
-        {clampedRating.toFixed(1)} / 5
+        {clampedRating.toFixed(1)} / {maxStars}
       </span>
     </div>
   );

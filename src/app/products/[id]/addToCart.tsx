@@ -50,7 +50,9 @@ export default function AddToCart({ productId, variant = "small" }: AddToCartPro
     <div className="flex gap-2">
       <div className="flex items-center rounded-full p-2 bg-gray-200">
         <button
-          onClick={() => setAmount(Math.max(1, amount - 1))}
+          onClick={() => {
+            if (amount > 1) setAmount(Math.max(1, amount - 1))
+          }}
           className="flex"
           aria-label="Decrease amount"
         >

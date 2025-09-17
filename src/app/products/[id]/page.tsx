@@ -4,7 +4,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { ProductReview } from "@/lib/interfaces";
 import { Star } from "lucide-react";
 import ImageCarousel from "./imageCarousel";
-import AddToCart from "./addToCart";
+import AddToCart from "@/components/addToCart";
 
 interface ProductDetailsProps {
   params: Promise<{ id: string }>;

@@ -45,6 +45,9 @@ async function ProductDetails({ id }: { id: string }) {
             </p>
             <p className="text-sm mt-4">{data.description}</p>
           </div>
+          <div className="border-2 rounded-xl p-2">
+            <p>Tags: {data.tags.join(", ")}</p>
+          </div>
           <AddToCart productId={id} variant="large" />
         </div>
       </div>
@@ -59,9 +62,6 @@ async function ProductDetails({ id }: { id: string }) {
             <p>Weight: {data.weight} kg</p>
           </div>
           <p>Size: {data.dimensions.width} x {data.dimensions.height} x {data.dimensions.depth} cm</p>
-        </div>
-        <div className="border-2 rounded-xl p-2">
-          <p>Tags: {data.tags.join(", ")}</p>
         </div>
       </div>
       <div className="mt-8">

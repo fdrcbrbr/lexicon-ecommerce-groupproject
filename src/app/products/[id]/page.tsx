@@ -48,17 +48,19 @@ async function ProductDetails({ id }: { id: string }) {
           <AddToCart productId={id} variant="large" />
         </div>
       </div>
-      <div className="flex flex-col md:flex-row gap-0 md:gap-4 items-center justify-center mx-auto">
-        <div className="border-2 rounded-xl p-2 h-full">
+      <div className="space-y-4">
+        <div className="flex justify-between border-2 rounded-xl p-2">
           <p>Warranty: {data.warrantyInformation}</p>
-          <p>Shipping: {data.shippingInformation}</p>
           <p>Return Policy: {data.returnPolicy}</p>
         </div>
-        <div className="border-2 rounded-xl p-2 h-full">
-          <p>Weight: {data.weight} kg</p>
+        <div className="border-2 rounded-xl p-2">
+          <div className="flex justify-between">
+            <p>Shipping: {data.shippingInformation}</p>
+            <p>Weight: {data.weight} kg</p>
+          </div>
           <p>Size: {data.dimensions.width} x {data.dimensions.height} x {data.dimensions.depth} cm</p>
         </div>
-        <div className="border-2 rounded-xl p-2 h-full">
+        <div className="border-2 rounded-xl p-2">
           <p>Tags: {data.tags.join(", ")}</p>
         </div>
       </div>

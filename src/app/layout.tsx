@@ -26,13 +26,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} antialiased`}
-      cz-shortcut-listen="true">
+        cz-shortcut-listen="true">
         <TooltipProvider>
-          <Header/>
+          <Header />
           <main>{children}</main>
-          <Footer/>
+          <Footer />
           <Toaster position="top-center" richColors />
-        </TooltipProvider>     </body>
+        </TooltipProvider>
+      </body>
     </html>
   );
 }

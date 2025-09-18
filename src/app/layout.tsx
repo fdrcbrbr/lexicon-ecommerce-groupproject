@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 // Import Inter from Google Fonts
 const inter = Inter({
@@ -24,10 +26,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} antialiased`}
-      cz-shortcut-listen="true">
-        <Header/>
-        <main>{children}</main>
-        <Footer/>
+        cz-shortcut-listen="true">
+        <TooltipProvider>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+          <Toaster position="top-center" richColors />
+        </TooltipProvider>
       </body>
     </html>
   );

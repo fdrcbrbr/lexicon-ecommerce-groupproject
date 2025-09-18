@@ -1,0 +1,99 @@
+'use client';
+import { useState } from "react";
+import { ShoppingBag, Plus, Minus } from "lucide-react";
+import { toast } from "sonner";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+
+interface AddToCartProps {
+  productId: string;
+  variant?: "small" | "large";
+}
+
+interface CartItem {
+  productId: string;
+  amount: number;
+}
+
+export default function AddToCart({ productId, variant = "small" }: AddToCartProps) {
+  const [amount, setAmount] = useState<number>(1);
+
+  const handleAddClick = () => {
+    const existingCart = localStorage.getItem("cart");
+    const cart = existingCart ? JSON.parse(existingCart) : [];
+    if (cart.some((item: CartItem) => item.productId === productId)) {
+      const updatedCart = cart.map((item: CartItem) => {
+        if (item.productId === productId) {
+          return { ...item, amount: item.amount + amount };
+        }
+        return item;
+      });
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+    } else {
+      const newCartItem = { productId, amount: 1 };
+      localStorage.setItem("cart", JSON.stringify([...cart, newCartItem]));
+    }
+    toast.success("Item added to cart");
+  }
+
+  if (variant === "small") {
+    return (
+      <div>
+        <Tooltip>
+          <TooltipTrigger>
+            <button
+              onClick={handleAddClick}
+              className="flex"
+              aria-label="Add to cart"
+            >
+              <ShoppingBag size={20} />
+            </button>
+          </TooltipTrigger>
+          <TooltipContent
+          className="border-2 border-gray-400 rounded-full"
+           side="bottom"
+           align="center"
+           sideOffset={5}
+           >
+            <p>Add 1 to cart</p>
+          </TooltipContent>
+        </Tooltip>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex gap-2">
+      <div className="flex items-center rounded-full p-2 bg-gray-200">
+        <button
+          onClick={() => {
+            if (amount > 1) setAmount(Math.max(1, amount - 1))
+          }}
+          className="flex"
+          aria-label="Decrease amount"
+        >
+          <Minus size={20} />
+        </button>
+        <input
+          type="text"
+          value={amount}
+          onChange={(e) => setAmount(parseInt(e.target.value) || 1)}
+          className="border-0 w-6 bg-gray-200 text-center"
+        />
+        <button
+          onClick={() => setAmount(amount + 1)}
+          className="flex"
+          aria-label="Increase amount"
+        >
+          <Plus size={20} />
+        </button>
+      </div>
+      <button
+        onClick={handleAddClick}
+        className="w-full rounded-full text-white bg-black"
+        aria-label="Add to cart"
+      >
+        Add to cart
+      </button>
+    </div>
+  );
+}

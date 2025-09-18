@@ -1,13 +1,15 @@
 // data/consts.ts
+
+// Navigation menu items
 export const MENUITEMS = [
   { title: 'Home', path: '/' },
   { title: 'Men', path: '/products?category=men' },
   { title: 'Women', path: '/products?category=women'},
   { title: 'About', path: '/about' },
-  { title: 'Contact', path: '/contact' }, 
+  { title: 'Contact', path: '/contact' },
 ];
 
-// Product categories mapping
+// Product categories mapping based on DummyJSON API structure
 export const PRODUCT_CATEGORIES = {
   men: [
     "mens-shirts",
@@ -22,7 +24,11 @@ export const PRODUCT_CATEGORIES = {
     "womens-watches"
   ],
   accessories: [
-    "sunglasses"
+    "sunglasses",
+    "mens-watches", // Watches can be considered accessories
+    "womens-watches",
+    "womens-jewellery",
+    "womens-bags"
   ]
 };
 
@@ -30,5 +36,22 @@ export const PRODUCT_CATEGORIES = {
 export const ALL_CATEGORIES = [
   ...PRODUCT_CATEGORIES.men,
   ...PRODUCT_CATEGORIES.women,
-  ...PRODUCT_CATEGORIES.accessories
+  "sunglasses" // Only include sunglasses from accessories to avoid duplicates
 ];
+
+// Category display names mapping
+export const CATEGORY_DISPLAY_NAMES: Record<string, string> = {
+  'all': 'All Products',
+  'men': "Men's Collection",
+  'women': "Women's Collection",
+  'accessories': 'Accessories',
+  'mens-shirts': "Men's Shirts",
+  'mens-shoes': "Men's Shoes",
+  'mens-watches': "Men's Watches",
+  'womens-bags': "Women's Bags",
+  'womens-dresses': "Women's Dresses",
+  'womens-jewellery': "Women's Jewellery",
+  'womens-shoes': "Women's Shoes",
+  'womens-watches': "Women's Watches",
+  'sunglasses': 'Sunglasses'
+};

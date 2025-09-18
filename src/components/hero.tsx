@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+
 export default function Hero() {
   return (
     <div>
@@ -19,9 +21,11 @@ export default function Hero() {
                 your sense of style.
               </p>
               <div className="text-left">
-                <button className="bg-black text-white px-6 md:px-12 py-3 rounded-full hover:bg-gray-800 transition-colors w-40 md:w-auto">
-                  Shop Now
-                </button>
+                <Link href="/products?category=all">
+                  <button className="bg-black text-white px-6 md:px-12 py-3 rounded-full hover:bg-gray-800 transition-colors w-40 md:w-auto">
+                    Shop Now
+                  </button>
+                </Link>
               </div>
             </div>
             <div className="w-full md:w-1/2 flex items-center justify-center h-full relative overflow-hidden">

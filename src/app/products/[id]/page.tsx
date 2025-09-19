@@ -6,6 +6,8 @@ import { Star } from "lucide-react";
 import ImageCarousel from "./imageCarousel";
 import AddToCart from "@/components/addToCart";
 import { Badge } from "@/components/ui/badge";
+import generateMetadata from "@/data/metadata";
+
 
 interface ProductDetailsProps {
   params: Promise<{ id: string }>;
@@ -13,9 +15,17 @@ interface ProductDetailsProps {
 
 export default async function ProductDetailsPage({ params }: ProductDetailsProps) {
   const { id } = await params;
+  const metadata = await generateMetadata(id)
 
+  console.log(metadata)
   return (
     <Suspense fallback={<div>Loading...</div>}>
+<script
+type="application/ld+json"
+dangerouslySetInnerHTML={{
+  __html: JSON.stringify(metadata).replace(/</g, '\\u003c'),
+}}
+/>
       <ProductDetails id={id} />
     </Suspense>
   );
@@ -23,7 +33,6 @@ export default async function ProductDetailsPage({ params }: ProductDetailsProps
 
 async function ProductDetails({ id }: { id: string }) {
   const data = await getProductDetails(id);
-
   return (
     <div className="px-8">
       <div className="flex flex-col md:flex-row gap-4 items-center justify-between">

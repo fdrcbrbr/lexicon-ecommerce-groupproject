@@ -33,6 +33,7 @@ export interface ProductDetails extends Products {
   rating: number;
   stock: number;
   brand?: string;
+  sku?: string;
   tags: string[];
   weight: number;
   dimensions: {

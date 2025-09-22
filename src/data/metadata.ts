@@ -27,9 +27,6 @@ export default async function generateMetadata(id:string) {
         ? "https://schema.org/InStock"
         : "https://schema.org/OutOfStock",
       priceCurrency: "SEK",
-      //   highPrice: product.priceRange.maxVariantPrice,
-      //   lowPrice: product.priceRange.minVariantPrice,
-      category: product.category,
       price: product.price,
       deliveryLeadTime: {
         "@type": "QuantitativeValue",

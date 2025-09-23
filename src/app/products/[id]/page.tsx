@@ -60,7 +60,7 @@ async function ProductDetails({ id }: { id: string }) {
             )}
           </div>
           <div>
-            <p className="flex md:flex-col gap-8 md:gap-0 items-center md:items-start">
+            <div className="flex md:flex-col gap-8 md:gap-0 items-center md:items-start">
               <PriceDisplay
                 price={data.price}
                 discountPercentage={data.discountPercentage}
@@ -69,7 +69,7 @@ async function ProductDetails({ id }: { id: string }) {
                 Availability: {data.stock > 0 && data.stock}{" "}
                 {data.availabilityStatus}
               </p>
-            </p>
+            </div>
             <p className="text-sm mt-4">{data.description}</p>
           </div>
           <div className="flex gap-2 p-2 capitalize">

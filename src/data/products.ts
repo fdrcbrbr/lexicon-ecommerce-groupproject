@@ -97,7 +97,7 @@ export async function getProductsForSection(section: string) {
   }
 }
 
-
+//Added for type secure logic in searchProducts
 type ProductCategoryKey = keyof typeof PRODUCT_CATEGORIES;
 
 function isProductCategoryKey(key: string): key is ProductCategoryKey {
@@ -131,7 +131,6 @@ export async function searchProducts(query: string, category?: string) {
         total: filteredProducts.length,
       };
     } else {
-      // Logica per "all" o categoria non valida
       const promises = ALL_CATEGORIES.map((cat) =>
         fetch(`${baseurl}products/search?q=${encodeURIComponent(query)}`)
           .then((res) => res.json())

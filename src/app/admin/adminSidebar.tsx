@@ -1,21 +1,19 @@
 'use client';
+import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { LayoutDashboard, ClipboardList, PackageOpen } from "lucide-react";
+import { ChevronsUpDownIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const ADMIN_PAGES = [
-  { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
-  { label: "Products", href: "/admin/products", icon: ClipboardList },
-  { label: "Orders", href: "/admin/orders", icon: PackageOpen },
-]
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible";
+import { PRODUCT_CATEGORIES, ADMIN_PAGES } from "@/data/consts";
+import Link from "next/link";
 
 export default function AdminSidebar() {
   const pathname = usePathname();
   const router = useRouter();
 
   return (
-    <div className="pr-4">
+    <div className="p-4">
       <nav className="flex flex-col items-stretch gap-2 py-4">
         {ADMIN_PAGES.map((page, id) => {
           const isActive = pathname === page.href;
@@ -37,10 +35,43 @@ export default function AdminSidebar() {
       </nav>
 
       {pathname.startsWith("/admin/products") && (
-        <div className="mt-8">
-          <p>Categories</p>
-        </div>
+        <Categories />
       )}
     </div>
+  );
+}
+
+function Categories() {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const categories = Object.keys(PRODUCT_CATEGORIES);
+
+  return (
+    <Collapsible
+      open={isOpen}
+      onOpenChange={setIsOpen}
+      className="mt-8 flex flex-col gap-2 w-full "
+    >
+      <div className="flex justify-between items-center">
+        <p>Categories</p>
+        <CollapsibleTrigger asChild>
+          <Button variant="ghost" size="icon" className="size-8">
+            <ChevronsUpDownIcon />
+          </Button>
+        </CollapsibleTrigger>
+      </div>
+      <CollapsibleContent className="flex flex-col gap-2">
+        {categories.map((category, id) => (
+          <div key={id}>
+            <Link
+              href={`/admin/products?category=${category}`}
+              className="flex justify-between items-center"
+            >
+              <p>{category}</p>
+              <p>10</p>
+            </Link>
+          </div>
+        ))}
+      </CollapsibleContent>
+    </Collapsible>
   );
 }

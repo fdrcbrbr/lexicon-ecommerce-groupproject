@@ -80,7 +80,7 @@ async function ProductsList({ category }: ProductListProps) {
             <span className="min-w-12 text-right">{product.stock}</span>
             <span className="min-w-20 text-right">{product.price}</span>
             <span className="min-w-18 text-right">{product.discountPercentage}%</span>
-            <span className="min-w-4"><ActionButton Icon={SquarePen} className="text-blue-700" /></span>
+            <span className="min-w-4"><ActionButton Icon={SquarePen} href={`/admin/products/${product.id}`} className="text-blue-700" /></span>
             <span className="min-w-4"><ActionButton Icon={Trash2} className="text-red-600" /></span>
           </div>
         ))}

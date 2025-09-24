@@ -21,8 +21,7 @@ export async function getProductsByCategory(category?: string) {
   } catch (error) {
     console.error("Error fetching products:", error);
     throw new Error(
-      `Failed to fetch products: ${
-        error instanceof Error ? error.message : String(error)
+      `Failed to fetch products: ${error instanceof Error ? error.message : String(error)
       }`
     );
   }
@@ -56,8 +55,7 @@ export async function getProductsByCategories(categories: string[]) {
   } catch (error) {
     console.error("Error fetching products:", error);
     throw new Error(
-      `Failed to fetch products: ${
-        error instanceof Error ? error.message : String(error)
+      `Failed to fetch products: ${error instanceof Error ? error.message : String(error)
       }`
     );
   }
@@ -119,8 +117,7 @@ export async function searchProducts(query: string, category?: string) {
   } catch (error) {
     console.error("Error searching products:", error);
     throw new Error(
-      `Failed to search products: ${
-        error instanceof Error ? error.message : String(error)
+      `Failed to search products: ${error instanceof Error ? error.message : String(error)
       }`
     );
   }
@@ -183,9 +180,39 @@ export async function getCategories() {
   } catch (error) {
     console.error("Error fetching categories:", error);
     throw new Error(
-      `Failed to fetch categories: ${
-        error instanceof Error ? error.message : String(error)
+      `Failed to fetch categories: ${error instanceof Error ? error.message : String(error)
       }`
     );
   }
+}
+
+/**
+ * Get product counts for the major categories
+ * @return Promise with category counts
+ */
+export async function getCategoryCounts() {
+  const categories = Object.keys(PRODUCT_CATEGORIES);
+  const result: Record<string, number> = {};
+
+  ALL_CATEGORIES.forEach(async (category) => {
+    const response = await getProductsByCategory(category)
+
+    if ("all" in result) {
+      result["all"] += response.total;
+    } else {
+      result["all"] = response.total;
+    }
+
+    categories.forEach((cat) => {
+      if (PRODUCT_CATEGORIES[cat as keyof typeof PRODUCT_CATEGORIES].includes(category)) {
+        if (cat in result) {
+          result[cat] += response.total;
+        } else {
+          result[cat] = response.total;
+        }
+      }
+    });
+  });
+
+  return result;
 }

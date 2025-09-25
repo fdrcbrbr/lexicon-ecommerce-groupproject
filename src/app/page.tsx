@@ -1,5 +1,6 @@
 import Hero from "@/components/hero";
 import Image from "next/image";
+import { Product } from "schema-dts";
 import { getProductsByCategory } from "@/data/products";
 
 export default async function Home() {

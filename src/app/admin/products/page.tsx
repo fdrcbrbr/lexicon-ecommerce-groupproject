@@ -4,7 +4,11 @@ import { Suspense } from "react";
 import { getProductsForSection } from "@/data/products";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import Link from "next/link";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface AdminProductsPageProps {
   searchParams: Promise<{
@@ -12,18 +16,20 @@ interface AdminProductsPageProps {
   }>;
 }
 
-export default async function AdminProductsPage({ searchParams }: AdminProductsPageProps) {
+export default async function AdminProductsPage({
+  searchParams,
+}: AdminProductsPageProps) {
   const { category } = await searchParams;
 
   return (
     <div className="w-full bg-gray-200 py-4 px-8">
       <div className="flex justify-end">
-        <Button
-          variant="outline"
-          className="text-md m-2 rounded-xl"
-        >
-          <PlusCircle size={16} />Add new product
-        </Button>
+        <Link href="/admin/products/add-product">
+          <Button variant="outline" className="text-md m-2 rounded-xl">
+            <PlusCircle size={16} />
+            Add new product
+          </Button>
+        </Link>
       </div>
       <Suspense fallback={<div>Loading...</div>}>
         <ProductsList category={category || "all"} />
@@ -79,9 +85,19 @@ async function ProductsList({ category }: ProductListProps) {
             <span className="w-full">{product.title}</span>
             <span className="min-w-12 text-right">{product.stock}</span>
             <span className="min-w-20 text-right">{product.price}</span>
-            <span className="min-w-18 text-right">{product.discountPercentage}%</span>
-            <span className="min-w-4"><ActionButton Icon={SquarePen} href={`/admin/products/${product.id}`} className="text-blue-700" /></span>
-            <span className="min-w-4"><ActionButton Icon={Trash2} className="text-red-600" /></span>
+            <span className="min-w-18 text-right">
+              {product.discountPercentage}%
+            </span>
+            <span className="min-w-4">
+              <ActionButton
+                Icon={SquarePen}
+                href={`/admin/products/${product.id}`}
+                className="text-blue-700"
+              />
+            </span>
+            <span className="min-w-4">
+              <ActionButton Icon={Trash2} className="text-red-600" />
+            </span>
           </div>
         ))}
         <ScrollBar />
@@ -95,13 +111,23 @@ interface ActionButtonProps {
   action?: () => void;
   href?: string;
   hoverMessage?: string;
-  className?: string
+  className?: string;
 }
 
-async function ActionButton({ Icon, action, href, className }: ActionButtonProps) {
+async function ActionButton({
+  Icon,
+  action,
+  href,
+  className,
+}: ActionButtonProps) {
   if (action) {
     return (
-      <Button variant="ghost" size="icon" onClick={action} className={className}>
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={action}
+        className={className}
+      >
         <Icon size={16} />
       </Button>
     );

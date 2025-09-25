@@ -1,4 +1,5 @@
 // data/consts.ts
+import { LayoutDashboard, ClipboardList, PackageOpen } from "lucide-react";
 
 // Navigation menu items
 export const MENUITEMS = [
@@ -10,11 +11,17 @@ export const MENUITEMS = [
   { title: 'Contact', path: '/contact' },
 ];
 
+export const ADMIN_PAGES = [
+  { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
+  { label: "Products", href: "/admin/products", icon: ClipboardList },
+  { label: "Orders", href: "/admin/orders", icon: PackageOpen },
+]
+
 // Product categories mapping based on DummyJSON API structure
 export const PRODUCT_CATEGORIES = {
   men: [
     "mens-shirts",
-    "mens-shoes", 
+    "mens-shoes",
     "mens-watches"
   ],
   women: [

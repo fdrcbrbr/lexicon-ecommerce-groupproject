@@ -10,7 +10,9 @@ export interface Products {
   description?: string;
   category?: string;
   price: number;
+  discountPercentage?: number;
   size?: number;
+  stock: number;
   thumbnail: string;
 }
 export interface ProductsPageData {

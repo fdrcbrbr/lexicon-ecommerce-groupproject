@@ -95,7 +95,14 @@ export async function getProductsForSection(section: string) {
   }
 }
 
-/**
+//Added for type secure logic in searchProducts
+type ProductCategoryKey = keyof typeof PRODUCT_CATEGORIES;
+
+function isProductCategoryKey(key: string): key is ProductCategoryKey {
+  return key in PRODUCT_CATEGORIES;
+}
+
+ /**
  * Search products by title or description
  * @param query - Search query string
  * @param category - Optional category to filter by
@@ -103,17 +110,47 @@ export async function getProductsForSection(section: string) {
  */
 export async function searchProducts(query: string, category?: string) {
   try {
-    const searchUrl = category
-      ? `${baseurl}products/search?q=${encodeURIComponent(query)}&category=${category}`
-      : `${baseurl}products/search?q=${encodeURIComponent(query)}`;
+    if (category && isProductCategoryKey(category)) {
+      const searchUrl = `${baseurl}products/search?q=${encodeURIComponent(query)}`;
+      const response = await fetch(searchUrl);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data: ProductsRes = await response.json();
 
-    const response = await fetch(searchUrl);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const allowedCategories = PRODUCT_CATEGORIES[category];
+      const filteredProducts = data.products.filter((product) =>
+        allowedCategories.includes(product.category!)
+      );
+
+      return {
+        ...data,
+        products: filteredProducts,
+        total: filteredProducts.length,
+      };
+    } else {
+      const promises = ALL_CATEGORIES.map((cat) =>
+        fetch(`${baseurl}products/search?q=${encodeURIComponent(query)}`)
+          .then((res) => res.json())
+          .then((data: ProductsRes) => ({
+            ...data,
+            products: data.products.filter((product) => product.category === cat),
+          }))
+      );
+
+      const results = await Promise.all(promises);
+      const allProducts = results.flatMap((result) => result.products);
+      const uniqueProducts = Array.from(
+        new Map(allProducts.map((product) => [product.id, product])).values()
+      );
+
+      return {
+        products: uniqueProducts,
+        total: uniqueProducts.length,
+        skip: 0,
+        limit: uniqueProducts.length,
+      };
     }
-    const data: ProductsRes = await response.json();
-
-    return data;
   } catch (error) {
     console.error("Error searching products:", error);
     throw new Error(
@@ -122,6 +159,7 @@ export async function searchProducts(query: string, category?: string) {
     );
   }
 }
+
 
 /**
  * Get a single product by ID

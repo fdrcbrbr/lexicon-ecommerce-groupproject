@@ -70,7 +70,7 @@ export default function AddProduct() {
             <label className="block text-sm font-medium text-gray-700">Discount (%)</label>
             <input
               type="number"
-              name="discount"
+              name="discountPercentage"
               className="mt-1 block w-full border border-gray-300 rounded-md p-2"
               required
             />

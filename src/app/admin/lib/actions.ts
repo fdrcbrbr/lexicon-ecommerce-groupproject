@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import {mapSpecificToGroupedCategory} from "@/lib/helpers";
 
 export async function createProduct(formData: FormData){
     const title = formData.get("title") as string
@@ -28,6 +29,13 @@ export async function createProduct(formData: FormData){
       body: JSON.stringify(newProduct),
     });
     const data = await res.json();
+
+    const groupedCategory = mapSpecificToGroupedCategory(category);
+
+    const transformedProduct = {
+      ...data,
+      category: groupedCategory,
+    };
     console.log(data);
   } catch (error) {
     console.error("Error creating product:", error);

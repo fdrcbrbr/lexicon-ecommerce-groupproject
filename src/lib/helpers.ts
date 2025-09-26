@@ -1,4 +1,5 @@
 import { ProductsPageData, PaginationData, FilterData } from "./interfaces";
+import { PRODUCT_CATEGORIES } from "@/data/consts";
 
 export function parseProductListingParams(searchParams: { [key: string]: string | string[] | undefined }, isMobile: boolean): ProductsPageData {
   const { page, limit, section, categories, searchterm } = searchParams;
@@ -47,4 +48,19 @@ export function buildQueryStringForProductsListing(params: ProductsPageData): st
   }
 
   return query.toString();
+}
+
+
+/**
+ * Map a specific category to its grouped category
+ * @param specificCategory - The specific category (e.g., "mens-shirts")
+ * @returns The grouped category (e.g., "men")
+ */
+export function mapSpecificToGroupedCategory(specificCategory: string): string {
+  for (const [groupedCategory, categories] of Object.entries(PRODUCT_CATEGORIES)) {
+    if (categories.includes(specificCategory)) {
+      return groupedCategory;
+    }
+  }
+  return "all"; // Default fallback
 }

@@ -4,9 +4,17 @@ import Form from "next/form";
 import Link from "next/link";
 import { createProduct } from "../../lib/actions";
 import {ALL_CATEGORIES} from "@/data/consts"
+import { useRouter } from "next/navigation";
 
 
 export default function AddProduct() {
+
+  const router = useRouter();
+
+  async function handleSubmit(formData: FormData) {
+    await createProduct(formData);
+    router.push("/admin/products/");
+  }
 
   return (
     <div className="w-full bg-gray-200 py-4 px-8">
@@ -15,7 +23,7 @@ export default function AddProduct() {
       </div>
 
       <div className="border-2 border-blue-500 rounded-lg p-4 mt-4">
-        <Form action={createProduct} className="space-y-4">
+        <Form action={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="title" className="block text-sm font-medium text-gray-700">Product Name</label>
             <input

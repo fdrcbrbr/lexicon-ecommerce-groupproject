@@ -1,6 +1,5 @@
 "use server"
 
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import {mapSpecificToGroupedCategory} from "@/lib/helpers";
 
@@ -22,25 +21,19 @@ export async function createProduct(formData: FormData){
     discountPercentage: parseInt(discountPercentage),
   };
 
-  try {
     const res = await fetch("https://dummyjson.com/products/add", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newProduct),
     });
     const data = await res.json();
-
     const groupedCategory = mapSpecificToGroupedCategory(category);
-
     const transformedProduct = {
       ...data,
       category: groupedCategory,
     };
-    console.log(data);
-  } catch (error) {
-    console.error("Error creating product:", error);
-  }
 
-  revalidatePath("/admin/products/");
-  redirect("/admin/products/");
+    const productQueryParam = encodeURIComponent(JSON.stringify(transformedProduct));
+    redirect(`/admin/products?newProduct=${productQueryParam}`);
+  
 }

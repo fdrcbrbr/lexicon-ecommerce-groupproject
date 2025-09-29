@@ -1,7 +1,6 @@
 import Hero from "@/components/hero";
-import Image from "next/image";
-import { Product } from "schema-dts";
 import { getProductsByCategory } from "@/data/products";
+import Card from "@/components/card";
 
 export default async function Home() {
   const { products } = await getProductsByCategory("sunglasses");
@@ -13,25 +12,11 @@ export default async function Home() {
         <h2 className="text-3xl md:text-5xl lg:text-6xl text-black font-black my-8">
           NEW ARRIVALS
         </h2>
-        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product) => {
-            return (
-              <li
-                key={product.id}
-                className="bg-neutral-200 rounded-xl justify-items-center"
-              >
-                <Image
-                  src={product.thumbnail}
-                  alt={product.title}
-                  height={200}
-                  width={200}
-                ></Image>
-                <h3>{product.title}</h3>
-                <h4>${product.price}</h4>
-              </li>
-            );
+            return <Card product={product} key={product.id} />;
           })}
-        </ul>
+        </div>
       </div>
     </div>
   );

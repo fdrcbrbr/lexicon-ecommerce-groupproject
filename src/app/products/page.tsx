@@ -1,12 +1,11 @@
-// app/products/page.tsx
 import { getProductsForSection } from "@/data/products";
 import { CATEGORY_DISPLAY_NAMES } from "@/data/consts";
 import { searchProducts } from "@/data/products";
 import FilterProducts from "@/components/FilterProducts";
-import Image from "next/image";
 import Link from "next/link";
 import SearchBar from "@/components/ui/search";
 import { ProductsRes, Products } from "@/lib/interfaces";
+import Card from "@/components/card";
 
 interface ProductsPageProps {
   searchParams?: { [key: string]: string | string[] | undefined };
@@ -137,35 +136,7 @@ export default async function ProductsPage({
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                       {categoryProducts.map((product) => (
-                        <Link
-                          key={product.id}
-                          href={`/products/${product.id}`}
-                          className="group cursor-pointer bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
-                        >
-                          <div className="aspect-square bg-gray-100 rounded-lg overflow-hidden mb-4">
-                            <Image
-                              src={product.thumbnail}
-                              alt={product.title}
-                              width={300}
-                              height={300}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                            />
-                          </div>
-
-                          <div className="space-y-2">
-                            <h3 className="font-medium text-gray-900 line-clamp-2">
-                              {product.title}
-                            </h3>
-                            <p className="text-lg font-bold text-gray-900">
-                              ${product.price}
-                            </p>
-                            {product.description && (
-                              <p className="text-sm text-gray-500 line-clamp-2">
-                                {product.description}
-                              </p>
-                            )}
-                          </div>
-                        </Link>
+                        <Card product={product} key={product.id} />
                       ))}
                     </div>
                   </div>

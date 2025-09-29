@@ -1,182 +1,344 @@
+// src/components/ContactForm.tsx
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState } from 'react';
+import Form from "next/form";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 interface ContactFormProps {
-  contactAction: (formData: FormData) => Promise<{ status?: string; message?: string; } | void>;
-  status?: string;
-  message?: string;
+  contactAction: (formData: FormData) => Promise<void | { status: string; message: string }>;
 }
 
-export default function ContactForm({ contactAction, status, message }: ContactFormProps) {
+export default function ContactForm({ contactAction }: ContactFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const formRef = useRef<HTMLFormElement>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<{
+    email?: string;
+    title?: string;
+    message?: string;
+  }>({});
 
-  const handleSubmit = async (formData: FormData) => {
-    setIsSubmitting(true);
-    try {
-      await contactAction(formData);
-      if (formRef.current && status !== 'error') {
-        formRef.current.reset();
-      }
-    } catch (error) {
-      console.error('Form submission error:', error);
-    } finally {
-      setIsSubmitting(false);
+  const validateField = (name: string, value: string) => {
+    switch (name) {
+      case 'email':
+        if (!value.trim()) {
+          return 'Email is required';
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          return 'Please enter a valid email address';
+        }
+        break;
+      case 'title':
+        if (!value.trim()) {
+          return 'Subject is required';
+        }
+        if (value.trim().length < 4) {
+          return 'Subject must be at least 4 characters';
+        }
+        break;
+      case 'message':
+        if (!value.trim()) {
+          return 'Message is required';
+        }
+        if (value.trim().length < 10) {
+          return 'Message must be at least 10 characters';
+        }
+        break;
+    }
+    return null;
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    const error = validateField(name, value);
+    
+    setFieldErrors(prev => ({
+      ...prev,
+      [name]: error || undefined
+    }));
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name } = e.target;
+    // Clear error when user starts typing
+    if (fieldErrors[name as keyof typeof fieldErrors]) {
+      setFieldErrors(prev => ({
+        ...prev,
+        [name]: undefined
+      }));
     }
   };
 
+  async function handleSubmit(formData: FormData) {
+    // Validate all required fields before submitting
+    const newErrors: typeof fieldErrors = {};
+    
+    const email = formData.get('email') as string;
+    const title = formData.get('title') as string;
+    const message = formData.get('message') as string;
+
+    const emailError = validateField('email', email);
+    const titleError = validateField('title', title);
+    const messageError = validateField('message', message);
+
+    if (emailError) newErrors.email = emailError;
+    if (titleError) newErrors.title = titleError;
+    if (messageError) newErrors.message = messageError;
+
+    if (Object.keys(newErrors).length > 0) {
+      setFieldErrors(newErrors);
+      setError('Please fill in all required fields correctly');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setError(null);
+    
+    try {
+      const result = await contactAction(formData);
+      
+      if (result && result.status === 'error') {
+        setError(
+          result.message === 'missing-fields' 
+            ? 'Please fill in all required fields.'
+            : 'Sorry, there was an error. Please try again.'
+        );
+      }
+    } catch (err) {
+      setError('An unexpected error occurred. Please try again.');
+      console.error('Form submission error:', err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
   return (
-    <div className="lg:pl-8">
-      <div className="bg-white p-8 rounded-lg shadow-lg border">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">
-          Send us a Message
-        </h2>
+    <div className="bg-white p-8 rounded-lg shadow-lg border">
+      <h2 className="text-2xl font-bold text-gray-900 mb-6">
+        Send us a Message
+      </h2>
 
-        {/* Error Messages */}
-        {status === "error" && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-            <div className="flex items-center">
-              <svg className="w-5 h-5 text-red-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16c-.77.833.192 2.5 1.732 2.5z" />
-              </svg>
-              <p className="text-red-800 font-medium">
-                {message === "missing-fields" 
-                  ? "Please fill in all required fields."
-                  : "Sorry, there was an error. Please try again."
-                }
-              </p>
-            </div>
-          </div>
-        )}
-
-        {/* Success Message */}
-        {status === "success" && (
-          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-            <div className="flex items-center">
-              <svg className="w-5 h-5 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              <p className="text-green-800 font-medium">
-                Message sent successfully! We`&apos;`ll get back to you soon.
-              </p>
-            </div>
-          </div>
-        )}
-
-        <form ref={formRef} action={handleSubmit} className="space-y-6">
-          
-          {/* Name and Email Row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                Name
-              </label>
-              <input
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
-                type="text"
-                name="name"
-                id="name"
-                autoComplete="name"
-                placeholder="Your full name"
-                minLength={2}
+      {/* Error Message with ARIA live region */}
+      {error && (
+        <div 
+          role="alert" 
+          aria-live="polite"
+          className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg"
+        >
+          <div className="flex items-center">
+            <svg 
+              className="w-5 h-5 text-red-600 mr-2" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16c-.77.833.192 2.5 1.732 2.5z" 
               />
-            </div>
-            
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                Email Address <span className="text-red-500">*</span>
-              </label>
-              <input
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
-                type="email"
-                name="email"
-                id="email"
-                autoComplete="email"
-                placeholder="your@email.com"
-                required
-              />
-            </div>
+            </svg>
+            <p className="text-red-800 font-medium">{error}</p>
           </div>
+        </div>
+      )}
 
-          {/* Subject */}
+      <Form action={handleSubmit} className="space-y-6">
+        
+        {/* Name and Email Row */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
-              Subject <span className="text-red-500">*</span>
+            <label 
+              htmlFor="name" 
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Name
             </label>
-            <input
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+            <Input
               type="text"
-              name="title"
-              id="title"
-              placeholder="What is this regarding?"
-              required
-              minLength={4}
-              maxLength={99}
+              name="name"
+              id="name"
+              autoComplete="name"
+              placeholder="Your full name"
+              minLength={2}
+              className="w-full"
+              aria-describedby="name-description"
+              onChange={handleChange}
             />
+            <span id="name-description" className="sr-only">
+              Enter your full name
+            </span>
           </div>
-
-          {/* Contact Type Dropdown */}
+          
           <div>
-            <label htmlFor="contactType" className="block text-sm font-medium text-gray-700 mb-2">
-              Contact Type
-            </label>
-            <select
-              name="contactType"
-              id="contactType"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-blue-500 transition-colors duration-200"
+            <label 
+              htmlFor="email" 
+              className="block text-sm font-medium text-gray-700 mb-2"
             >
-              <option value="">Select contact type</option>
-              <option value="support">Support - Technical Help</option>
-              <option value="info">Information - General Questions</option>
-              <option value="complaint">Complaint - Issues & Feedback</option>      
-            </select>
-          </div>
-
-          {/* Message */}
-          <div>
-            <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-              Message <span className="text-red-500">*</span>
+              Email Address <span className="text-red-500" aria-label="required">*</span>
             </label>
-            <textarea
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-vertical transition-colors duration-200"
-              id="message"
-              name="message"
-              rows={6}
-              placeholder="Tell us more about your inquiry..."
+            <Input
+              type="email"
+              name="email"
+              id="email"
+              autoComplete="email"
+              placeholder="your@email.com"
               required
-              minLength={10}
+              aria-required="true"
+              aria-describedby="email-description"
+              className={`w-full ${fieldErrors.email ? 'border-red-500 focus:ring-red-500' : ''}`}
+              onBlur={handleBlur}
+              onChange={handleChange}
             />
+            {fieldErrors.email && (
+              <div className="flex items-center mt-2 text-sm text-red-600" role="alert">
+                <svg className="w-4 h-4 mr-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                </svg>
+                {fieldErrors.email}
+              </div>
+            )}
+            <span id="email-description" className="sr-only">
+              Enter a valid email address
+            </span>
           </div>
+        </div>
 
-          {/* Submit Button */}
-          <div className="pt-4">
-            <button
-              className={`w-full inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white transition-all duration-200 transform ${
-                isSubmitting
-                  ? 'bg-gray-400 cursor-not-allowed'
-                  : 'bg-gray-600 hover:bg-gray-700 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500'
-              }`}
-              type="submit"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? (
-                <>
-                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Sending...
-                </>
-              ) : (
-                <>
-                  <span>Send Message</span>
-                </>
-              )}
-            </button>
-          </div>
-        </form>
-      </div>
+        {/* Subject */}
+        <div>
+          <label 
+            htmlFor="title" 
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
+            Subject <span className="text-red-500" aria-label="required">*</span>
+          </label>
+          <Input
+            type="text"
+            name="title"
+            id="title"
+            placeholder="What is this regarding?"
+            required
+            aria-required="true"
+            minLength={4}
+            maxLength={99}
+            aria-describedby="title-description"
+            className={`w-full ${fieldErrors.title ? 'border-red-500 focus:ring-red-500' : ''}`}
+            onBlur={handleBlur}
+            onChange={handleChange}
+          />
+          {fieldErrors.title && (
+            <div className="flex items-center mt-2 text-sm text-red-600" role="alert">
+              <svg className="w-4 h-4 mr-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>
+              {fieldErrors.title}
+            </div>
+          )}
+          <span id="title-description" className="sr-only">
+            Brief subject of your message, minimum 4 characters
+          </span>
+        </div>
+
+        {/* Contact Type Dropdown */}
+        <div>
+          <label 
+            htmlFor="contactType" 
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
+            Contact Type
+          </label>
+          <select
+            name="contactType"
+            id="contactType"
+            className="w-full px-3 py-2 border border-input bg-background rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-input"
+            aria-describedby="contactType-description"
+          >
+            <option value="">Select contact type</option>
+            <option value="support">Support - Technical Help</option>
+            <option value="info">Information - General Questions</option>
+            <option value="complaint">Complaint - Issues &amp; Feedback</option>
+            <option value="partnership">Partnership - Business Collaboration</option>
+            <option value="other">Other - Different Matter</option>
+          </select>
+          <span id="contactType-description" className="sr-only">
+            Optional: Select the type of inquiry
+          </span>
+        </div>
+
+        {/* Message */}
+        <div>
+          <label 
+            htmlFor="message" 
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
+            Message <span className="text-red-500" aria-label="required">*</span>
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            rows={6}
+            placeholder="Tell us more about your inquiry..."
+            required
+            aria-required="true"
+            minLength={10}
+            maxLength={1000}
+            aria-describedby="message-description"
+            className={`w-full px-3 py-2 border ${fieldErrors.message ? 'border-red-500 focus:ring-red-500' : 'border-input'} bg-background rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-ring focus:border-input resize-vertical`}
+            onBlur={handleBlur}
+            onChange={handleChange}
+          />
+          {fieldErrors.message ? (
+            <div className="flex items-center mt-2 text-sm text-red-600" role="alert">
+              <svg className="w-4 h-4 mr-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>
+              {fieldErrors.message}
+            </div>
+          ) : (
+            <span id="message-description" className="text-sm text-gray-500 mt-2 block">
+              Minimum 10 characters required
+            </span>
+          )}
+        </div>
+
+        {/* Submit Button */}
+        <div className="pt-4">
+          <Button
+            type="submit"
+            size="lg"
+            disabled={isSubmitting}
+            className={`w-full text-white transition-colors duration-300 ${
+              isSubmitting 
+                ? 'bg-green-600 hover:bg-green-700 focus:ring-green-500' 
+                : 'bg-black hover:bg-gray-800 focus:ring-gray-900'
+            } disabled:bg-gray-400 disabled:cursor-not-allowed disabled:opacity-70`}
+            aria-busy={isSubmitting}
+          >
+            {isSubmitting ? (
+              <>
+                <span className="mr-2">Sending</span>
+                <span className="flex space-x-1">
+                  <span className="w-1.5 h-1.5 bg-white rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
+                  <span className="w-1.5 h-1.5 bg-white rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
+                  <span className="w-1.5 h-1.5 bg-white rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
+                </span>
+              </>
+            ) : (
+              <>
+                Send Message
+              </>
+            )}
+          </Button>
+        </div>
+
+        {/* Required fields notice */}
+        <p className="text-sm text-gray-500 text-center" role="note">
+          Fields marked with <span className="text-red-500" aria-label="asterisk">*</span> are required
+        </p>
+      </Form>
     </div>
   );
 }

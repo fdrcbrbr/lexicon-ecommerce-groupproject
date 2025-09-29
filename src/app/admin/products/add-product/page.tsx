@@ -3,9 +3,8 @@ import { Button } from "@/components/ui/button";
 import Form from "next/form";
 import Link from "next/link";
 import { createProduct } from "../../lib/actions";
-import {ALL_CATEGORIES} from "@/data/consts"
 import { useRouter } from "next/navigation";
-
+import NestedDropdownForm from "@/app/admin/components/form-subcategories";
 
 export default function AddProduct() {
 
@@ -35,24 +34,7 @@ export default function AddProduct() {
             />
           </div>
 
-          <div>
-            <label htmlFor="category" className="block text-sm font-medium text-gray-700">
-              Category
-            </label>
-            <select
-              name="category"
-              id="category"
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-              required
-            >
-              <option value="">Select a category</option>
-              {ALL_CATEGORIES.map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat.replace(/-/g, " ")}
-                </option>
-              ))}
-            </select>
-          </div>
+          <NestedDropdownForm/>
 
           <div>
             <label className="block text-sm font-medium text-gray-700">Stock</label>

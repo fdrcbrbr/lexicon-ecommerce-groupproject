@@ -1,28 +1,31 @@
 "use client"
+import { useFormState } from "react-dom";
 import { Button } from "@/components/ui/button";
-import Form from "next/form";
 import Link from "next/link";
 import { createProduct } from "../../lib/actions";
 import { useRouter } from "next/navigation";
 import NestedDropdownForm from "@/app/admin/components/form-subcategories";
+import { useEffect } from "react";
+
 
 export default function AddProduct() {
-
   const router = useRouter();
+  const [state, useActionState, isPending] = useFormState(createProduct, null);
 
-  async function handleSubmit(formData: FormData) {
-    await createProduct(formData);
-    router.push("/admin/products/");
-  }
+  useEffect(() => {
+    if (state?.success && state.product) {
+      const productQueryParam = encodeURIComponent(JSON.stringify(state.product));
+      router.push(`/admin/products?newProduct=${productQueryParam}`);
+    }
+  }, [state, router]);
 
   return (
     <div className="w-full bg-gray-200 py-4 px-8">
       <div className="flex justify-start">
         <h2 className="text-xl font-bold">New Product</h2>
       </div>
-
       <div className="border-2 border-blue-500 rounded-lg p-4 mt-4">
-        <Form action={handleSubmit} className="space-y-4">
+        <form action={useActionState} className="space-y-4">
           <div>
             <label htmlFor="title" className="block text-sm font-medium text-gray-700">Product Name</label>
             <input
@@ -33,9 +36,7 @@ export default function AddProduct() {
               required
             />
           </div>
-
-          <NestedDropdownForm/>
-
+          <NestedDropdownForm />
           <div>
             <label className="block text-sm font-medium text-gray-700">Stock</label>
             <input
@@ -45,7 +46,6 @@ export default function AddProduct() {
               required
             />
           </div>
-
           <div>
             <label className="block text-sm font-medium text-gray-700">Price</label>
             <input
@@ -55,7 +55,6 @@ export default function AddProduct() {
               required
             />
           </div>
-
           <div>
             <label className="block text-sm font-medium text-gray-700">Discount (%)</label>
             <input
@@ -65,18 +64,21 @@ export default function AddProduct() {
               required
             />
           </div>
-
           <div className="flex justify-end space-x-4 mt-6">
-            <Button type="submit" className="bg-blue-700 text-white px-4 py-2 rounded">
-              SAVE
+            <Button
+              type="submit"
+              className="bg-blue-700 text-white px-4 py-2 rounded"
+              disabled={isPending}
+            >
+              {isPending ? "Saving..." : "SAVE"}
             </Button>
             <Link href="/admin/products">
-                <Button type="button" className="bg-gray-700 text-white px-4 py-2 rounded">
-              CANCEL
-            </Button>
+              <Button type="button" className="bg-gray-700 text-white px-4 py-2 rounded">
+                CANCEL
+              </Button>
             </Link>
           </div>
-        </Form>
+        </form>
       </div>
     </div>
   );

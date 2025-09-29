@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { LucideIcon, PlusCircle, SquarePen, Trash2 } from "lucide-react";
+import { PlusCircle, SquarePen } from "lucide-react";
 import { Suspense } from "react";
 import { getProductsForSection } from "@/data/products";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import Link from "next/link";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import DeleteButton from "./deleteButton";
 
 interface AdminProductsPageProps {
   searchParams: Promise<{
@@ -46,32 +46,8 @@ async function ProductsList({ category }: ProductListProps) {
         <span className="min-w-12 text-right">Stock:</span>
         <span className="min-w-20 text-right">Price:</span>
         <span className="min-w-18 text-right">Discount:</span>
-        <span className="min-w-4">
-          <Tooltip>
-            <TooltipTrigger>
-              <ActionButton Icon={SquarePen} className="text-blue-700" />
-            </TooltipTrigger>
-            <TooltipContent
-              className="border-2 border-gray-400 bg-white rounded-full font-bold"
-              side="bottom"
-            >
-              <p>Edit product</p>
-            </TooltipContent>
-          </Tooltip>
-        </span>
-        <span className="min-w-4">
-          <Tooltip>
-            <TooltipTrigger>
-              <ActionButton Icon={Trash2} className="text-red-600" />
-            </TooltipTrigger>
-            <TooltipContent
-              className="border-2 border-gray-400 bg-white rounded-full font-bold"
-              side="bottom"
-            >
-              <p>Delete product</p>
-            </TooltipContent>
-          </Tooltip>
-        </span>
+        <span className="min-w-14"><EditButton /></span>
+        <span className="min-w-14"><DeleteButton  /></span>
       </div>
       <ScrollArea className="h-[41rem]">
         {response.products.map((product) => (
@@ -80,8 +56,8 @@ async function ProductsList({ category }: ProductListProps) {
             <span className="min-w-12 text-right">{product.stock}</span>
             <span className="min-w-20 text-right">{product.price}</span>
             <span className="min-w-18 text-right">{product.discountPercentage}%</span>
-            <span className="min-w-4"><ActionButton Icon={SquarePen} href={`/admin/products/${product.id}`} className="text-blue-700" /></span>
-            <span className="min-w-4"><ActionButton Icon={Trash2} className="text-red-600" /></span>
+            <span className="min-w-14"><EditButton id={product.id} /></span>
+            <span className="min-w-14"><DeleteButton id={product.id}/></span>
           </div>
         ))}
         <ScrollBar />
@@ -90,36 +66,22 @@ async function ProductsList({ category }: ProductListProps) {
   );
 }
 
-interface ActionButtonProps {
-  Icon: LucideIcon;
-  action?: () => void;
-  href?: string;
-  hoverMessage?: string;
-  className?: string
-}
-
-async function ActionButton({ Icon, action, href, className }: ActionButtonProps) {
-  if (action) {
+function EditButton({ id }: { id?: number }) {
+  if (id) {
     return (
-      <Button variant="ghost" size="icon" onClick={action} className={className}>
-        <Icon size={16} />
-      </Button>
-    );
-  }
-
-  if (href) {
-    return (
-      <Link href={href}>
-        <Button variant="ghost" size="icon" className={className}>
-          <Icon size={16} />
+      <Link href={`/admin/products/${id}`}>
+        <Button variant="ghost" size="icon" className="text-blue-700">
+          <SquarePen />
+          Edit
         </Button>
       </Link>
     );
   }
 
   return (
-    <Button variant="ghost" size="icon" className={className}>
-      <Icon size={16} />
+    <Button variant="ghost" size="icon" className="text-blue-700">
+      <SquarePen />
+      Edit
     </Button>
   );
 }

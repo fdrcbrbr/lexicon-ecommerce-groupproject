@@ -254,3 +254,25 @@ export async function getCategoryCounts() {
 
   return result;
 }
+
+/**
+ * Delete a single product by ID
+ * @params id - Product ID
+ * @returns nothing
+ */
+export async function deleteProduct(id: number) {
+  try {
+    const response = await fetch(`${baseurl}products/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    throw new Error(
+      `Failed to delete product: ${error instanceof Error ? error.message : String(error)}`
+    );
+  }
+}

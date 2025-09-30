@@ -57,3 +57,9 @@ export interface ProductReview {
   reviewerName: string;
   reviewerEmail: string;
 }
+
+export interface ActionState {
+  success?: boolean;
+  error?: string;
+  product?: unknown;
+}

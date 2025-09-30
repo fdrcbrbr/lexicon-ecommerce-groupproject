@@ -1,11 +1,6 @@
 "use server"
 import { mapSpecificToGroupedCategory } from "@/lib/helpers";
-
-interface ActionState {
-  success?: boolean;
-  error?: string;
-  product?: unknown;
-}
+import { ActionState } from "./interfaces";
 
 export async function createProduct(prevState: ActionState | null, formData: FormData): Promise<ActionState> {
   try {
@@ -43,7 +38,7 @@ export async function createProduct(prevState: ActionState | null, formData: For
   }
 }
 
-export async function updateProduct(prevState: ActionState | null, formData: FormData) {
+export async function updateProduct(prevState: ActionState | null, formData: FormData): Promise<ActionState> {
   try {
     const id = formData.get("id") as string;
     const title = formData.get("title") as string;

@@ -1,30 +1,25 @@
 import { useState, useEffect } from "react";
-
-type CategoryKey = "men" | "women" | "accessories";
-
-const categories: Record<CategoryKey, string[]> = {
-  men: ["Shirts", "Pants", "Shoes"],
-  women: ["Dresses", "Skirt", "Heels"],
-  accessories: ["Watches", "Bags", "Jewelry"],
-};
+import { buildCategoryMatrix } from "@/lib/helpers";
 
 interface NestedDropdownFormProps {
   defaultValue?: string;
 }
 
 export default function NestedDropdownForm({ defaultValue }: NestedDropdownFormProps) {
-  const [mainCategory, setMainCategory] = useState<CategoryKey | "">("");
+  const [mainCategory, setMainCategory] = useState<string | "">("");
   const [subCategory, setSubCategory] = useState("");
+
+  const categories = buildCategoryMatrix();
 
   useEffect(() => {
     if (defaultValue) {
       const [main, sub] = defaultValue.split("|");
-      if (main && categories[main as CategoryKey]) {
-        setMainCategory(main as CategoryKey);
+      if (main && categories[main]) {
+        setMainCategory(main);
         setSubCategory(sub || "");
       }
     }
-  }, [defaultValue]);
+  }, [defaultValue, categories]);
 
   return (
   <div className="space-y-4">
@@ -35,7 +30,7 @@ export default function NestedDropdownForm({ defaultValue }: NestedDropdownFormP
         value={mainCategory}
         required
         onChange={(e) => {
-          setMainCategory(e.target.value as CategoryKey);
+          setMainCategory(e.target.value);
           setSubCategory("");
         }}
         className="p-2 border rounded"

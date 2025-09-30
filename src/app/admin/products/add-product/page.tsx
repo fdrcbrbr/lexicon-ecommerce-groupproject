@@ -2,7 +2,7 @@
 import { useFormState } from "react-dom";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { createProduct } from "../../lib/actions";
+import { createProduct } from "@/lib/actions";
 import { useRouter } from "next/navigation";
 import NestedDropdownForm from "@/app/admin/_components/form-subcategories";
 import { useEffect } from "react";

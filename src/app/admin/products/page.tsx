@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import { getProductsForSection } from "@/data/products";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import Link from "next/link";
-import DeleteButton from "./deleteButton";
+import DeleteButton from "@/app/admin/_components/deleteButton";
 
 interface Product {
   id: number;
@@ -67,7 +67,7 @@ async function ProductsList({ category, customProduct }: ProductListProps) {
   const products = customProduct
     ? [{ ...customProduct, isNew: true }, ...response.products]
     : response.products;
-  
+
 
   return (
     <div className="mt-4">

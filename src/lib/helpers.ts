@@ -64,3 +64,36 @@ export function mapSpecificToGroupedCategory(specificCategory: string): string {
   }
   return "all"; // Default fallback
 }
+
+/**
+ * Transforms between DB and Form style category
+ * @param category - The category to translate from
+ * @param isDB - Denotes if DB style or not, defaults to true
+ * @return string with category in the other style
+ */
+export function translateCategory(category: string, isDB: boolean = true): string {
+  const fromSeparator = isDB ? "-" : "|";
+  const toSeparator = isDB ? "|" : "-";
+  const [mainCat, subCat] = category.split(fromSeparator);
+  if (isDB && !subCat) return `accessories|${mainCat}`;
+  if (!isDB && subCat === "sunglasses") return `${subCat}`
+  return `${mainCat}${toSeparator}${subCat}`;
+}
+
+export function buildCategoryMatrix() {
+  const result: Record<string, string[]> = {};
+  for (const [key, value] of Object.entries(PRODUCT_CATEGORIES)) {
+    value.forEach((item) => {
+      let [mainCat, subCat] = item.split("-");
+      if (!subCat) {
+        subCat = mainCat;
+        mainCat = key;
+      }
+      if (!result[mainCat]) {
+        result[mainCat] = [];
+      }
+      if (!result[mainCat].includes(subCat)) result[mainCat].push(subCat);
+    });
+  }
+  return result;
+}

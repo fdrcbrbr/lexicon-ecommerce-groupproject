@@ -40,6 +40,7 @@ export default function DeleteButton({ id, name, redirectTo, variant = "list" }:
   return (
     <Button
       onClick={handleDelete}
+      variant="ghost"
       size="icon"
       className="text-red-600">
       <Trash2 />

@@ -3,17 +3,16 @@ import { Button } from "@/components/ui/button";
 import NestedDropdownForm from "./form-subcategories";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { useFormState } from "react-dom";
+import { useActionState, useEffect } from "react";
 import { ActionState } from "@/lib/interfaces";
 
 interface ProductFormProps {
-  formAction: (prevState: ActionState | null, formData: FormData) => Promise<ActionState>;
+  submitAction: (prevState: ActionState | null, formData: FormData) => Promise<ActionState>;
 }
 
-export default function ProductForm({ formAction }: ProductFormProps) {
+export default function ProductForm({ submitAction }: ProductFormProps) {
   const router = useRouter();
-  const [state, useActionState, isPending] = useFormState(formAction, null);
+  const [state, formAction, isPending] = useActionState(submitAction, null);
 
   useEffect(() => {
     if (state?.success && state.product) {
@@ -24,7 +23,7 @@ export default function ProductForm({ formAction }: ProductFormProps) {
 
   return (
     <div className="border-2 border-blue-500 rounded-lg p-4 mt-4">
-      <form action={useActionState} className="space-y-4">
+      <form action={formAction} className="space-y-4">
         <div>
           <label htmlFor="title" className="block text-sm font-medium text-gray-700">Product Name</label>
           <input

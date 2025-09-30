@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { createProduct } from "../../lib/actions";
 import { useRouter } from "next/navigation";
-import NestedDropdownForm from "@/app/admin/components/form-subcategories";
+import NestedDropdownForm from "@/app/admin/_components/form-subcategories";
 import { useEffect } from "react";
 
 

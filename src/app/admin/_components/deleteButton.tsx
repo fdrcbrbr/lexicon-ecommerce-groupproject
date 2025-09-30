@@ -5,13 +5,20 @@ import { Trash2 } from "lucide-react";
 import { deleteProduct } from "@/data/products";
 import { toast } from "sonner";
 
-export default function DeleteButton({ id, redirectTo }: { id?: number; redirectTo?: string}) {
+interface DeleteButtonProps {
+  id?: number;
+  name?: string;
+  redirectTo?: string;
+  variant?: "list" | "form";
+}
+
+export default function DeleteButton({ id, name, redirectTo, variant = "list" }: DeleteButtonProps) {
   const router = useRouter();
 
   const handleDelete = async () => {
     if (!id) return;
 
-    if (confirm(`Are you sure you want to delete product: ${id}`)) {
+    if (confirm(`Are you sure you want to delete product: ${name}`)) {
       await deleteProduct(id);
       toast.success("Product deleted successfully");
       if (redirectTo) router.push(redirectTo);
@@ -19,10 +26,20 @@ export default function DeleteButton({ id, redirectTo }: { id?: number; redirect
     }
   }
 
+  if (variant === "form") {
+    return (
+      <Button
+        onClick={handleDelete}
+        type="button"
+        className="bg-red-600 text-white px-4 py-2 rounded">
+        DELETE
+      </Button>
+    );
+  }
+
   return (
     <Button
       onClick={handleDelete}
-      variant="ghost"
       size="icon"
       className="text-red-600">
       <Trash2 />

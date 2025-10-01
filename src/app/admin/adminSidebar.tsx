@@ -36,7 +36,7 @@ export default function AdminSidebar() {
 
   return (
     <div className="p-4">
-      <nav className="flex flex-col items-stretch gap-2 py-4">
+      <nav className="flex md:flex-col items-stretch gap-2 py-4">
         {ADMIN_PAGES.map((page, id) => {
           const isActive = pathname === page.href;
           const Icon = page.icon;

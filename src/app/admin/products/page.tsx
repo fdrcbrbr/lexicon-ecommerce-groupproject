@@ -69,23 +69,27 @@ async function ProductsList({ category }: ProductListProps) {
 
   return (
     <div className="mt-4">
-      <div className="flex gap-4 items-center">
-        <span className="w-full">Product name:</span>
-        <span className="min-w-12 text-right">Stock:</span>
-        <span className="min-w-20 text-right">Price:</span>
-        <span className="min-w-18 text-right">Discount:</span>
-        <span className="min-w-14"><EditButton /></span>
-        <span className="min-w-14"><DeleteButton /></span>
+      <div className="flex flex-col md:flex-row gap-0 md:gap-4 items-center">
+        <span className="w-full text-center md:text-left font-semibold">Product name:</span>
+        <div className="flex gap-4 items-center">
+          <span className="min-w-12 text-right">Stock:</span>
+          <span className="min-w-20 text-right">Price:</span>
+          <span className="min-w-18 text-right">Discount:</span>
+          <span className="min-w-14"><EditButton /></span>
+          <span className="min-w-14"><DeleteButton /></span>
+        </div>
       </div>
       <ScrollArea className="h-[41rem]">
         {products.map((product) => (
-          <div key={product.id} className="flex gap-4 items-center">
-            <span className="w-full">{product.title}</span>
-            <span className="min-w-12 text-right">{product.stock}</span>
-            <span className="min-w-20 text-right">{product.price}</span>
-            <span className="min-w-18 text-right">{product.discountPercentage}%</span>
-            <span className="min-w-14"><EditButton id={product.id} /></span>
-            <span className="min-w-14"><DeleteButton id={product.id} /></span>
+          <div key={product.id} className="flex flex-col md:flex-row gap-0 md:gap-4 items-center">
+            <span className="w-full text-center md:text-left font-semibold">{product.title}</span>
+            <div className="flex gap-4 items-center">
+              <span className="min-w-12 text-right">{product.stock}</span>
+              <span className="min-w-20 text-right">{product.price}</span>
+              <span className="min-w-18 text-right">{product.discountPercentage}%</span>
+              <span className="min-w-14"><EditButton id={product.id} /></span>
+              <span className="min-w-14"><DeleteButton id={product.id} /></span>
+            </div>
           </div>
         ))}
         <ScrollBar />

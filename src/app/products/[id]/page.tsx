@@ -104,10 +104,10 @@ async function ProductDetails({ id }: { id: string }) {
       </div>
       <div className="mt-8">
         <div className="flex gap-4">
-          <p className="mb-4 flex gap-1">
+          <div className="mb-4 flex gap-1">
             Overall rating <StarRating rating={data.rating} /> from{" "}
             {data.reviews.length} reviews
-          </p>
+          </div>
         </div>
         <div className="px-4">
           <Carousel className="mx-auto">

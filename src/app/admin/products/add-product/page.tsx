@@ -8,7 +8,7 @@ export default function AddProduct() {
       <div className="flex justify-start">
         <h2 className="text-xl font-bold">New Product</h2>
       </div>
-      <ProductForm formAction={createProduct} />
+      <ProductForm submitAction={createProduct} />
     </div>
   );
 }

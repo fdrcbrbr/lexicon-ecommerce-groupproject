@@ -5,6 +5,7 @@ import { getProductsForSection } from "@/data/products";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import Link from "next/link";
 import DeleteButton from "@/app/admin/_components/deleteButton";
+import { toast } from "sonner";
 
 interface Product {
   id: number;
@@ -31,6 +32,7 @@ export default async function AdminProductsPage({ searchParams }: AdminProductsP
   if (newProduct) {
     try {
       customProduct = JSON.parse(decodeURIComponent(newProduct));
+      toast.success(`New or updated product: ${customProduct?.title}`)
     } catch (e) {
       console.error("Error parsing product", e);
     }
@@ -49,7 +51,7 @@ export default async function AdminProductsPage({ searchParams }: AdminProductsP
         </Link>
       </div>
       <Suspense fallback={<div>Loading...</div>}>
-        <ProductsList category={category || "all"} customProduct={customProduct} />
+        <ProductsList category={category || "all"} />
       </Suspense>
     </div>
   );
@@ -57,16 +59,12 @@ export default async function AdminProductsPage({ searchParams }: AdminProductsP
 
 interface ProductListProps {
   category: string;
-  customProduct: Product | null;
 }
 
-async function ProductsList({ category, customProduct }: ProductListProps) {
-  console.log("Custom product:", customProduct);
+async function ProductsList({ category }: ProductListProps) {
   const response = await getProductsForSection(category);
 
-  const products = customProduct
-    ? [{ ...customProduct, isNew: true }, ...response.products]
-    : response.products;
+  const products = response.products;
 
 
   return (

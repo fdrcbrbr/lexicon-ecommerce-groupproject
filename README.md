@@ -6,6 +6,19 @@ Plattformen visar upp ett urval av produkter från ett externt API, är fullt re
 Målet var att få praktisk erfarenhet av att arbeta med Server Components, 
 Client Components, statiska och dynamiska routes, hantering av asynkron data och praktiskt agilt arbete i grupp.
 
+Gruppen fastställde från början en design som aldrig har ändrats, vilket gjorde det möjligt att alltid behålla samma 
+struktur och gjorde arbetet tydligare och mer konsekvent. Att arbeta med en databas hade förmodligen förenklat 
+hanteringen och filtreringen av data, men att arbeta utan en databas var ändå en bra övning. Det fick oss att reflektera 
+mycket över datastrukturen och dess konsekvenser.
+
+Jag skulle vilja kunna implementera projektet vidare för att uppnå köpfunktionalitet och möjligen några andra 
+typer av produktfilter för bättre funktion och estetik.
+
+Bland de mest intressanta komponenterna jag har arbetat med finns sökfiltret för produkter efter text och komponenten 
+för att lägga till produkter i admin-sektionen. I dessa komponenter förstår man funktionen av funktioner som useState, 
+useEffect, Action States och hur man hanterar extern data som mottas via formulär, 
+samt skillnaden mellan "client"- och "server"-komponenter.
+
 
 ---
 ## 📦 Innehållsförteckning
